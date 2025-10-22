@@ -1,0 +1,69 @@
+﻿@model AlmazayaTravel.Models.Booking // Model can be null if bookingId wasn't passed back
+@{
+    bool success = ViewBag.Success ?? false;
+    string message = ViewBag.Message ?? (success ? "Payment successful!" : "Payment failed or was cancelled.");
+    ViewData["Title"] = success ? "Payment Successful" : "Payment Failed";
+}
+
+<header class="page-header-simple py-5 mb-4 @(success ? "bg-success-subtle" : "bg-danger-subtle")">
+    <div class="container text-center">
+         @if (success)
+         {
+              <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+             <h1 class="text-success" data-key="PaymentSuccessTitle" data-en="Payment Successful" data-ar="تم الدفع بنجاح">Payment Successful</h1>
+         }
+         else
+         {
+              <i class="fas fa-times-circle fa-4x text-danger mb-3"></i>
+             <h1 class="text-danger" data-key="PaymentFailedTitle" data-en="Payment Failed" data-ar="فشل الدفع">Payment Failed</h1>
+         }
+        <p class="lead text-muted">@message</p>
+     </div>
+</header>
+
+<div class="container mb-5">
+    @if(Model != null)
+    {
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+             <div class="card shadow-sm rounded-3">
+                 <div class="card-header bg-light py-3">
+                     <h5 class="mb-0"><i class="fas fa-receipt me-2"></i><span data-key="BookingSummary" data-en="Booking Summary" data-ar="ملخص الحجز">Booking Summary</span></h5>
+                 </div>
+                <div class="card-body p-4">
+                     <h5 class="mb-3">@Model.TripPackage?.Name</h5>
+                     <dl class="row mb-0">
+                         <dt class="col-sm-4" data-key="BookingId" data-en="Booking ID" data-ar="معرف الحجز"></dt><dd class="col-sm-8">@Model.Id</dd>
+                         <dt class="col-sm-4" data-key="ClientName" data-en="Name" data-ar="الاسم"></dt><dd class="col-sm-8">@Model.ClientName</dd>
+                         <dt class="col-sm-4" data-key="Email" data-en="Email" data-ar="البريد"></dt><dd class="col-sm-8">@Model.Email</dd>
+                         <dt class="col-sm-4" data-key="BookingDate" data-en="Booking Date" data-ar="تاريخ الحجز"></dt><dd class="col-sm-8">@Model.BookingDate.ToLocalTime().ToString("yyyy-MM-dd")</dd>
+                         <dt class="col-sm-4" data-key="PaymentStatus" data-en="Status" data-ar="الحالة"></dt>
+                         <dd class="col-sm-8">
+                               @if (success) { <span class="badge bg-success fs-6" data-key="Paid" data-en="Paid" data-ar="مدفوع">Paid</span> }
+                               else { <span class="badge bg-danger fs-6" data-key="FailedOrCancelled" data-en="Failed / Cancelled" data-ar="فشل / ألغي">Failed / Cancelled</span> }
+                         </dd>
+                          @if(success && Model.AmountPaid.HasValue) {
+                            <dt class="col-sm-4" data-key="AmountPaid" data-en="Amount Paid" data-ar="المبلغ المدفوع"></dt>
+                            <dd class="col-sm-8 fw-bold">@Model.AmountPaid.Value.ToString("C")</dd>
+                          }
+                          @if(!string.IsNullOrEmpty(Model.PaymentTransactionId)) {
+                             <dt class="col-sm-4" data-key="TransactionId" data-en="Transaction ID" data-ar="معرف المعاملة"></dt>
+                             <dd class="col-sm-8">@Model.PaymentTransactionId</dd>
+                          }
+                     </dl>
+                </div>
+             </div>
+        </div>
+    </div>
+    }
+
+     <div class="text-center mt-4">
+          <a asp-action="Index" class="btn btn-primary rounded-pill px-4">
+             <i class="fas fa-home me-1"></i> <span data-key="BackToHome" data-en="Back to Home" data-ar="العودة للرئيسية">Back to Home</span>
+          </a>
+     </div>
+</div>
+
+@section Scripts {
+     <!-- Translation handled globally by index.js -->
+}

@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<!-- يمكنك تغيير اسم المشروع هنا إذا أردت -->
+		<AssemblyName>AlmazayaTravel</AssemblyName>
+		<RootNamespace>AlmazayaTravel</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!--
+      حزمة MVC الأساسية تأتي مع SDK
+    -->
+
+		<!--
+      حزم Entity Framework Core (استخدم الموفر المناسب لقاعدة بياناتك)
+      هنا مثال لـ SQL Server
+    -->
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+
+		<!--
+      (اختياري) حزم ASP.NET Core Identity للمصادقة (إذا كنت ستستخدمها)
+    -->
+		<!--
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.7" />
+    -->
+
+		<!--
+      (اختياري) حزمة شائعة للتعامل مع JSON، قد تكون مفيدة لتكامل الدفع
+      (System.Text.Json مدمج بالفعل ولكن Newtonsoft أكثر مرونة أحياناً)
+    -->
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+
+	</ItemGroup>
+
+	<ItemGroup>
+		<!--
+      تأكد من وجود مجلد wwwroot (للملفات الثابتة مثل CSS, JS, Images)
+      وأن محتوياته يتم تضمينها عند النشر. هذا الإعداد الافتراضي غالباً ما يكون موجوداً.
+    -->
+		<Folder Include="wwwroot\css\" />
+		<Folder Include="wwwroot\images\" />
+		<Folder Include="wwwroot\js\" />
+		<Folder Include="wwwroot\lib\" />
+	</ItemGroup>
+
+</Project>

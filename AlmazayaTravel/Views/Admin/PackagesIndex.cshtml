@@ -1,0 +1,133 @@
+﻿@model IEnumerable<AlmazayaTravel.Models.TripPackage>
+@{
+    ViewData["Title"] = "Manage Trip Packages";
+    Layout = "_AdminLayout";
+}
+
+<h1 data-key="ManageTitle" data-en="Manage Trip Packages" data-ar="إدارة باقات الرحلات">Manage Trip Packages</h1>
+<hr />
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
+        <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
+        <i class="fas fa-exclamation-triangle"></i> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<p>
+    <a asp-action="PackageCreate" class="btn btn-success rounded-pill shadow-sm">
+        <i class="fas fa-plus me-2"></i><span data-key="CreatePackageBtn" data-en="Create New Package" data-ar="إنشاء باقة جديدة">Create New Package</span>
+    </a>
+</p>
+
+<div class="table-responsive shadow-sm rounded-3">
+    <table class="table table-striped table-hover align-middle admin-table">
+        <thead class="table-dark">
+            <tr>
+                <th><span data-key="PackageName" data-en="Package Name" data-ar="اسم الباقة">Package Name</span></th>
+                <th><span data-key="Destination" data-en="Destination" data-ar="الوجهة">Destination</span></th>
+                <th><span data-key="Duration" data-en="Duration (Days)" data-ar="المدة (أيام)">Duration (Days)</span></th>
+                <th><span data-key="PriceBefore" data-en="Price (Before)" data-ar="السعر (قبل)">Price (Before)</span></th>
+                <th><span data-key="PriceAfter" data-en="Price (After)" data-ar="السعر (بعد)">Price (After)</span></th>
+                <th><span data-key="IsActive" data-en="Active" data-ar="نشط">Active</span></th>
+                <th><span data-key="Image" data-en="Image" data-ar="الصورة">Image</span></th>
+                <th style="width: 150px;"><span data-key="Actions" data-en="Actions" data-ar="الإجراءات">Actions</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var package in Model)
+                {
+                    <tr>
+                        <td>@package.Name</td>
+                        <td>@package.DestinationCountry</td>
+                        <td>@package.DurationDays</td>
+                        <td>@package.PriceBeforeDiscount.ToString("N2")</td>
+                        <td>@(package.PriceAfterDiscount?.ToString("N2") ?? "-")</td>
+                        <td>
+                            @if (package.IsActive)
+                            {
+                                <span class="badge bg-success" data-key="Yes" data-en="Yes" data-ar="نعم">Yes</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary" data-key="No" data-en="No" data-ar="لا">No</span>
+                            }
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(package.ImageUrl))
+                            {
+                                <img src="@Url.Content("~" + package.ImageUrl)" alt="Package Image" class="img-thumbnail admin-table-img" onerror="this.style.display='none'" />
+                            }
+                            else
+                            {
+                                <span class="text-muted small" data-key="NoImage" data-en="No Image" data-ar="لا توجد صورة">No Image</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a asp-action="PackageEdit" asp-route-id="@package.Id" class="btn btn-outline-primary" title="Edit">
+                                    <i class="fas fa-edit"></i> <span data-key="EditBtn" data-en="Edit" data-ar="تعديل">Edit</span>
+                                </a>
+                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@package.Id" title="Delete">
+                                    <i class="fas fa-trash-alt"></i> <span data-key="DeleteBtn" data-en="Delete" data-ar="حذف">Delete</span>
+                                </button>
+                            </div>
+
+                            <!-- Delete Modal -->
+                            <div class="modal fade" id="deleteModal-@package.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@package.Id" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content shadow">
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title" id="deleteModalLabel-@package.Id">
+                                                <i class="fas fa-exclamation-triangle me-2"></i><span data-key="ConfirmDeleteTitle" data-en="Confirm Deletion" data-ar="تأكيد الحذف">Confirm Deletion</span>
+                                            </h5>
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p data-key="ConfirmDeleteMsg" data-en="Are you sure you want to delete the package" data-ar="هل أنت متأكد أنك تريد حذف الباقة">Are you sure you want to delete the package</p>
+                                            <p class="fw-bold">@package.Name?</p>
+                                            <p class="text-muted small" data-key="CannotUndo" data-en="This action cannot be undone." data-ar="لا يمكن التراجع عن هذا الإجراء.">This action cannot be undone.</p>
+                                        </div>
+                                        <div class="modal-footer border-0">
+                                            <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">
+                                                <span data-key="CancelBtn" data-en="Cancel" data-ar="إلغاء">Cancel</span>
+                                            </button>
+                                            <form asp-action="PackageDeleteConfirmed" asp-route-id="@package.Id" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-danger rounded-pill">
+                                                    <i class="fas fa-trash-alt me-1"></i> <span data-key="DeleteBtnConfirm" data-en="Delete Package" data-ar="حذف الباقة">Delete Package</span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="8" class="text-center text-muted py-4">
+                        <i class="fas fa-info-circle me-2"></i> <span data-key="NoPackages" data-en="No packages found." data-ar="لم يتم العثور على باقات.">No packages found.</span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <!-- Translation handled globally by admin-dashboard.js -->
+}

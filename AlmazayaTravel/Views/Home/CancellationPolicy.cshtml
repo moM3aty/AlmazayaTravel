@@ -1,0 +1,148 @@
+﻿@{
+    ViewData["Title"] = "Cancellation & Modification Policy";
+    // Layout = "_Layout"; // Assumed from _ViewStart.cshtml
+}
+
+<!-- Simple Hero or Header for the Policy Page -->
+<header class="page-header py-5 bg-light border-bottom mb-4">
+    <div class="container">
+        <div class="text-center">
+            <h1 class="fw-bolder" data-en="Cancellation & Modification Policy" data-ar="سياسة الإلغاء والتعديل">Cancellation & Modification Policy</h1>
+            <p class="lead mb-0 text-muted" data-en="Please review our terms regarding trip cancellations or changes." data-ar="يرجى مراجعة شروطنا المتعلقة بإلغاء أو تغيير الرحلات.">Please review our terms regarding trip cancellations or changes.</p>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container section-padding">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card border-0 shadow-sm mb-4 policy-card">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="card-title mb-4 h4" data-en="Cancellation Policy" data-ar="سياسة الإلغاء">Cancellation Policy</h2>
+
+                    <div class="policy-item mb-4">
+                        <h3 class="h5 mb-2 policy-subtitle" data-en="Cancellation More Than 30 Days Before Travel" data-ar="الإلغاء قبل أكثر من ٣٠ يومًا من السفر">
+                            <i class="fas fa-calendar-check text-success me-2"></i> Cancellation More Than 30 Days Before Travel
+                        </h3>
+                        <p data-en="Customers have the right to cancel the trip 30 days or more before the travel date." data-ar="يحق للعميل إلغاء الرحلة قبل ٣٠ يومًا أو أكثر من تاريخ السفر.">
+                            Customers have the right to cancel the trip 30 days or more before the travel date.
+                        </p>
+                        <p data-en="The amount paid will be refunded within 7 working days from the time we are officially notified." data-ar="سيتم استرداد المبلغ المدفوع في مدة ٧ أيام عمل من وقت إبلاغنا رسميًا بذلك.">
+                            The amount paid will be refunded within 7 working days from the time we are officially notified.
+                        </p>
+                        <p data-en="The customer will bear any deductions that may arise from hotels or local tour operators within the destination country." data-ar="يتحمل العميل أي خصومات قد تنشأ من قبل الفنادق أو منظمي الرحلات الداخلية داخل البلد التي تم حجز الرحلة بها.">
+                            The customer will bear any deductions that may arise from hotels or local tour operators within the destination country.
+                        </p>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="policy-item mb-4">
+                        <h3 class="h5 mb-2 policy-subtitle" data-en="Cancellation Within 30 Days Before Travel" data-ar="الإلغاء خلال ٣٠ يومًا قبل السفر">
+                            <i class="fas fa-calendar-times text-warning me-2"></i> Cancellation Within 30 Days Before Travel
+                        </h3>
+                        <p data-en="If the trip is canceled within 30 days before the travel date, the customer will bear any deductions arising from this." data-ar="إذا تم إلغاء الرحلة في خلال ٣٠ يومًا قبل ميعاد السفر، يتحمل العميل بأي خصومات تنشأ عن ذلك.">
+                            If the trip is canceled within 30 days before the travel date, the customer will bear any deductions arising from this.
+                        </p>
+                        <p data-en="Deductions are determined according to the policy of each hotel, tour organizer, and internal transport provider." data-ar="تُحدد الخصومات حسب سياسة كل فندق أو منظم رحلات ونقل داخلي.">
+                            Deductions are determined according to the policy of each hotel, tour organizer, and internal transport provider.
+                        </p>
+                        <p data-en="The remaining amount will be refunded to the customer within a maximum period of 7 working days from the date we are officially notified." data-ar="سيتم استرداد المبلغ المتبقي له في مدة لا تتجاوز ٧ أيام عمل من تاريخ إبلاغنا رسميًا بذلك.">
+                            The remaining amount will be refunded to the customer within a maximum period of 7 working days from the date we are officially notified.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm policy-card">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="card-title mb-4 h4" data-en="Modification Policy" data-ar="سياسة التعديل">Modification Policy</h2>
+
+                    <div class="policy-item">
+                        <h3 class="h5 mb-2 policy-subtitle" data-en="Travel Date Changes" data-ar="تغيير مواعيد السفر">
+                            <i class="fas fa-edit text-info me-2"></i> Travel Date Changes
+                        </h3>
+                        <p data-en="Customers have the right to modify the travel or return date up to 7 days before travel." data-ar="يحق للعميل التعديل في ميعاد السفر أو العودة حتى قبل السفر بـ ٧ أيام.">
+                            Customers have the right to modify the travel or return date up to 7 days before travel.
+                        </p>
+                        <p data-en="The customer will bear any price differences that may arise from hotel management and local tour organizers within the destination country." data-ar="يتحمل العميل بفروق الأسعار التي قد تنشأ من إدارة الفنادق ومنظمي الرحلات الداخلية داخل الدولة التي تم حجز الرحلة بها.">
+                            The customer will bear any price differences that may arise from hotel management and local tour organizers within the destination country.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .policy-card {
+            border-radius: 10px;
+        }
+
+        .policy-item h3 {
+            color: #333; /* Darker heading */
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+            .policy-item h3 i {
+                font-size: 1.1em;
+            }
+
+        .policy-item p {
+            color: #555; /* Slightly darker paragraph text */
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+        }
+
+        .page-header h1 {
+            color: #fb5b32; /* Primary color */
+        }
+
+        hr {
+            opacity: 0.15;
+        }
+
+    </style>
+}
+
+@section Scripts {
+    <script>
+        // Apply translations on load for this specific page
+         document.addEventListener('DOMContentLoaded', function () {
+            applyPolicyPageTranslation();
+         });
+
+         function applyPolicyPageTranslation() {
+             const lang = localStorage.getItem("language") || "en";
+             document.querySelectorAll("[data-en][data-ar]").forEach(el => {
+                 // Check if the element's direct content should be translated
+                 if (el.tagName === "H1" || el.tagName === "P" || el.tagName === "H2" || el.tagName === "H3" || el.tagName === "BUTTON" || el.tagName === "SPAN") {
+                      // Check if the element has direct text content to translate
+                      let hasDirectText = Array.from(el.childNodes).some(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+
+                      if (hasDirectText && el.dataset[lang]) {
+                         // Find the first text node and update it (preserves icons in H3)
+                         let textNode = Array.from(el.childNodes).find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+                         if(textNode) {
+                              textNode.textContent = el.dataset[lang];
+                         } else {
+                              // Fallback for simple elements like <p>
+                               el.textContent = el.dataset[lang];
+                         }
+                      } else if (el.dataset[lang]){
+                           // Fallback for elements expected to have text
+                           el.textContent = el.dataset[lang];
+                      }
+                 }
+             });
+         }
+    </script>
+}
+

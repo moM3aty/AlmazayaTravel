@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin - AlmazayaTravel</title>
+    <link rel="icon" href="~/images/logo.png" type="image/png">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome-free/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/admin-dashboard.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body data-bs-theme="light">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top shadow-sm admin-navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand d-flex align-items-center" asp-controller="Admin" asp-action="">
+                    <img src="~/images/logo.png" alt="Logo" class="admin-logo-img me-2">
+                    Almazaya Admin
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-controller="Admin" asp-action="" data-key="NavPackages" data-en="Manage Packages" data-ar="إدارة الباقات">Manage Packages</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-controller="Admin" asp-action="BookingsIndex" data-key="NavBookings" data-en="View Bookings" data-ar="عرض الحجوزات">View Bookings</a>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="navbar-nav">
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item dropdown me-2">
+                                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarLangDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-globe me-1"></i> <span id="adminCurrentLang">Language</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarLangDropdown">
+                                    <li><button class="dropdown-item admin-lang-switch-btn" type="button" data-lang="en">English</button></li>
+                                    <li><button class="dropdown-item admin-lang-switch-btn" type="button" data-lang="ar">العربية</button></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <form asp-controller="Admin" asp-action="Logout" method="post" id="logoutForm">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" data-key="LogoutBtn" data-en="Logout" data-ar="خروج">
+                                        <i class="fas fa-sign-out-alt me-1"></i> Logout
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-controller="Admin" asp-action="Login" data-key="LoginBtn" data-en="Login" data-ar="دخول">Login</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container admin-container mt-5 pt-5 mb-5 pb-3">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer admin-footer border-top bg-light text-muted py-3">
+        <div class="container text-center">
+            &copy; @DateTime.Now.Year - AlmazayaTravel Admin Panel
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/admin-dashboard.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

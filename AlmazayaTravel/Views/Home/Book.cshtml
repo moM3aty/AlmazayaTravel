@@ -1,0 +1,172 @@
+﻿@model AlmazayaTravel.Models.Booking
+@{
+    ViewData["Title"] = "Book Package";
+    var packageName = Model?.TripPackage?.Name ?? "Selected Package";
+    // Determine language based on HTML attribute set by JS
+    var currentLang = Context.Request.Headers["Accept-Language"].ToString().Split(',')[0].StartsWith("ar") ? "ar" : "en";
+    packageName = currentLang == "ar" ? (Model?.TripPackage?.NameAr ?? packageName) : packageName;
+
+    var packagePrice = Model?.TripPackage != null ? (Model.TripPackage.PriceAfterDiscount ?? Model.TripPackage.PriceBeforeDiscount) : 0;
+    var priceNote = currentLang == "ar" ? "(السعر النهائي قد يختلف...)" : "(Final price may vary...)"; // Example direct translation
+}
+
+@section Styles {
+    <style>
+        body {
+            padding-top: 100px; /* Adjust if needed */
+        }
+
+        .navbar {
+            min-height: 80px;
+        }
+
+        .booking-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden; /* Ensure header radius works */
+        }
+
+            .booking-card .card-header {
+                background: linear-gradient(135deg, #4A90E2 0%, #3a7bc8 100%); /* Primary gradient */
+            }
+
+        .form-label.fw-bold {
+            font-weight: 500 !important;
+            color: #495057;
+            margin-bottom: 0.4rem;
+            font-size: 0.88rem;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 1px solid #dce4ec;
+            padding: 0.7rem 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            background-color: #fdfdfe;
+        }
+
+            .form-control:focus, .form-select:focus {
+                border-color: #4A90E2;
+                box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+                background-color: #fff;
+            }
+
+        .btn-lg {
+            padding: 0.8rem 1.75rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        /* RTL Adjustments */
+        body.rtl .booking-card .card-header h5 .me-2 {
+            margin-left: 0.5rem !important;
+            margin-right: 0 !important;
+        }
+
+        body.rtl .btn .me-1 {
+            margin-left: 0.25rem !important;
+            margin-right: 0 !important;
+        }
+
+        body.rtl .btn .me-2 {
+            margin-left: 0.5rem !important;
+            margin-right: 0 !important;
+        }
+
+    </style>
+}
+
+<header class="page-header-simple bg-light py-4 mb-4">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent p-0 m-0">
+                <li class="breadcrumb-item"><a asp-action="Index" data-key="breadcrumbHome" data-en="Home" data-ar="الرئيسية">Home</a></li>
+                @if (Model?.TripPackage != null)
+                {
+                    <li class="breadcrumb-item"><a asp-action="PackageDetails" asp-route-id="@Model.TripPackageId" data-key="packageName_@Model.TripPackageId" data-en="@Model.TripPackage.Name" data-ar="@Model.TripPackage.NameAr">@packageName</a></li>
+                }
+                <li class="breadcrumb-item active" aria-current="page" data-key="BookTitle" data-en="Book Your Trip" data-ar="احجز رحلتك">Book Your Trip</li>
+            </ol>
+        </nav>
+        <h1 class="mt-2" data-key="BookTitle" data-en="Book Your Trip" data-ar="احجز رحلتك">Book Your Trip</h1>
+        <p class="lead text-muted" data-key="packageName_@Model?.TripPackageId" data-en="@Model?.TripPackage?.Name" data-ar="@Model?.TripPackage?.NameAr">@packageName</p>
+    </div>
+</header>
+
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        <!-- Center the column -->
+        <div class="col-lg-8 col-md-10">
+            <!-- Adjust width as needed -->
+            <div class="card booking-card">
+                <div class="card-header py-3 text-white">
+                    <h5 class="mb-0 d-flex align-items-center"><i class="fas fa-user-edit me-2"></i><span data-key="EnterDetails" data-en="Enter Your Booking Details" data-ar="أدخل تفاصيل الحجز الخاصة بك">Enter Your Booking Details</span></h5>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <!-- More padding on larger screens -->
+                    <form asp-action="Book" method="post">
+                        @Html.AntiForgeryToken()
+                        <!-- Display model errors -->
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger alert-sm p-2 mb-3" role="alert"></div>
+
+                        <input type="hidden" asp-for="TripPackageId" />
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-12">
+                                <!-- Full width name -->
+                                <label asp-for="ClientName" class="form-label fw-bold" data-key="FullName" data-en="Full Name" data-ar="الاسم الكامل"></label>
+                                <input asp-for="ClientName" class="form-control" />
+                                <span asp-validation-for="ClientName" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="PhoneNumber" class="form-label fw-bold" data-key="Phone" data-en="Phone Number" data-ar="رقم الهاتف"></label>
+                                <input asp-for="PhoneNumber" type="tel" class="form-control" />
+                                <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Email" class="form-label fw-bold" data-key="Email" data-en="Email Address" data-ar="البريد الإلكتروني"></label>
+                                <input asp-for="Email" type="email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Adults" class="form-label fw-bold" data-key="Adults" data-en="Number of Adults" data-ar="عدد البالغين"></label>
+                                <input asp-for="Adults" type="number" min="1" class="form-control" value="1" />
+                                <span asp-validation-for="Adults" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Children" class="form-label fw-bold" data-key="Children" data-en="Number of Children" data-ar="عدد الأطفال"></label>
+                                <input asp-for="Children" type="number" min="0" class="form-control" value="0" />
+                                <span asp-validation-for="Children" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info mt-3" role="alert">
+                            <i class="fas fa-info-circle me-2"></i> <span data-key="PriceInfo" data-en="Approximate price based on package: " data-ar="السعر التقريبي بناءً على الباقة: ">Approximate price: </span> <span class="fw-bold">@packagePrice.ToString("C")</span>
+                            <small class="d-block" data-key="PriceNoteBooking" data-en="(Final price calculated before payment.)" data-ar="(يتم حساب السعر النهائي قبل الدفع.)">@priceNote</small>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3">
+                            <a asp-action="PackageDetails" asp-route-id="@Model?.TripPackageId" class="btn btn-outline-secondary rounded-pill px-4 order-sm-1">
+                                <i class="fas fa-arrow-left me-1"></i> <span data-key="BackToDetails" data-en="Back to Details" data-ar="العودة للتفاصيل">Back to Details</span>
+                            </a>
+                            <button type="submit" class="btn btn-success btn-lg rounded-pill px-5 shadow order-sm-2">
+                                <!-- Ensure button is type submit -->
+                                <i class="fas fa-credit-card me-2"></i> <span data-key="ProceedToPayment" data-en="Proceed to Payment" data-ar="المتابعة إلى الدفع">Proceed to Payment</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!-- Translation handled globally by index.js -->
+}
+

@@ -1,0 +1,227 @@
+﻿@model IEnumerable<AlmazayaTravel.Models.TripPackage> // Expecting a list of Trip Packages
+@{
+    ViewData["Title"] = "Home Page";
+    // Layout is set in _ViewStart.cshtml
+}
+
+<!-- Hero Section (Remains Mostly the Same) -->
+<header class="hero-section d-flex flex-column justify-content-center align-items-center text-center text-white" id="home">
+    <h6 class="mb-2" data-en="EXPLORE YOUR LIFE" data-ar="اكتشف حياتك" data-aos="fade-up" data-aos-delay="100">EXPLORE YOUR LIFE</h6>
+    <h1 data-aos="fade-up" data-aos-delay="100" class="mb-3" data-en="Discover & book extraordinary trips" data-ar="اكتشف واحجز رحلات استثنائية">Discover & book extraordinary trips</h1>
+    <p data-aos="fade-up" data-aos-delay="100" class="mb-4 description" data-en="Save up to 50% on the best attractions, tours and activities with Almazaya" data-ar="وفر حتى 50% على أفضل المزارات والجولات والأنشطة مع Almazaya">Save up to 50%...</p>
+
+    <!-- Guarantees (Remains the Same) -->
+    <div class="d-flex justify-content-center flex-wrap gap-3 text-white small guarantees mt-4 mb-5">
+        <div data-aos="fade-up" data-aos-delay="100" class="mx-3 box h-100 p-4 text-center">
+            <i class="fas fa-tag fa-2x mb-3"></i>
+            <p data-en="100% Best Price Guarantee" data-ar="ضمان أفضل سعر 100%" class="mb-0">100% Best Price Guarantee</p>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="100" class="mx-3 box h-100 p-4 text-center">
+            <i class="fas fa-headset fa-2x mb-3"></i>
+            <p data-en="24/7 Expert Customer Support" data-ar="دعم عملاء على مدار الساعة" class="mb-0">24/7 Expert Customer Support</p>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="100" class="mx-3 box h-100 p-4 text-center">
+            <i class="fas fa-lock fa-2x mb-3"></i>
+            <p data-en="Fast & Secure Booking" data-ar="حجز سريع وآمن" class="mb-0">Fast & Secure Booking</p>
+        </div>
+    </div>
+
+    <!-- Hero Buttons (Remains the Same) -->
+    <div data-aos="fade-up" data-aos-delay="100" class="hero-buttons mt-4 d-flex flex-wrap gap-3 justify-content-center align-items-center" data-aos-delay="600">
+        <a data-ar="استكشف الباقات" data-en="Explore Packages" href="#travels" class="btn btn-primary btn-lg mx-3">Explore Packages</a>
+        <a data-ar="اعرف المزيد" data-en="Learn More" href="#about" class="btn btn-outline-light btn-lg">Learn More</a>
+    </div>
+</header>
+
+<main>
+    <!-- About Section (Remains the Same) -->
+    <section class="section-padding about" id="about">
+        <div class="container py-5">
+            <div class="row g-4 align-items-center justify-content-center">
+                <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="800">
+                    <div class="position-relative mb-4 mb-md-0 images">
+                        <img src="~/images/about-2.jpg" class="rounded-4 shadow image-1" alt="City" onerror="this.onerror=null; this.src='https://placehold.co/520x400/cccccc/ffffff?text=Image+1';">
+                        <img src="~/images/about-1.jpg" class="rounded-4 shadow position-absolute about-img-overlap" alt="Travelers" onerror="this.onerror=null; this.src='https://placehold.co/270x200/cccccc/ffffff?text=Image+2';">
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="800">
+                    <div>
+                        <div class="text-uppercase mb-2 start" data-en="OUR PLEASANT EXPERIENCE" data-ar="تجربتنا المميزة">OUR PLEASANT EXPERIENCE</div>
+                        <h2 class="fw-bold mb-4" data-en="About Almazaya Travel" data-ar="حول المزايا للسفر">About Almazaya Travel</h2>
+                        <p class="text-muted mb-3" data-en="Almazaya Travel is proud..." data-ar="تفخر المزايا للسفر...">Almazaya Travel is proud...</p>
+                        <p class="text-muted mb-3" data-en="With deep local knowledge..." data-ar="بفضل معرفتنا المحلية...">With deep local knowledge...</p>
+                        <div class="row g-4 justify-content-center align-items-center">
+                            <div class="col-md-5 mb-2 mb-md-0">
+                                <div class="p-4 text-white rounded-3 exp-box">
+                                    <span class="d-block fw-bold" style="font-size:2.3rem;" data-en="3+" data-ar="+3">3+</span>
+                                    <span class="small" data-en="Years of Experience" data-ar="سنوات من الخبرة">Years of Experience</span>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div>
+                                    <div class="about-features">
+                                        <div class="feature-item"><i class="fas fa-certificate"></i> <span data-ar="مرخص رسميًا..." data-en="Officially Licensed...">Officially Licensed...</span></div>
+                                        <div class="feature-item"><i class="fas fa-globe-asia"></i> <span data-ar="متخصصون..." data-en="Southeast Asia Specialists">Specialists...</span></div>
+                                        <div class="feature-item"><i class="fas fa-users"></i> <span data-en="Expert Local Guides" data-ar="مرشدون...">Expert Guides...</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <a href="#travels" class="btn btn-danger rounded-pill" data-en="Discover Now" data-ar="اكتشف الآن">Discover Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- *** Travels Section (Updated Dynamically) *** -->
+    <section class="section-padding travels" id="travels">
+        <div class="container">
+            <div class="section-title" data-aos="zoom-in" data-aos-delay="800">
+                <h6 data-ar="أفضل الوجهات" data-en="Top Destinations">Top Destinations</h6>
+                <h2 data-ar=" اختر باقتك" data-en="Choose Your Package">Choose Your Package</h2>
+            </div>
+            <div class="row g-4">
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var package in Model)
+                    {
+                        <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                            <div class="ba-tax-inner h-100 w-100 d-flex flex-column">
+                                <div class="thumbnail-tax">
+                                    <div>
+                                        <img src="@Url.Content("~" + (package.ImageUrl ?? "/images/placeholder-package.png"))" alt="@package.Name" onerror="this.onerror=null; this.src='https://placehold.co/600x450/cccccc/ffffff?text=Package+Image';">
+                                    </div>
+                                </div>
+                                <div class="content-tax flex-grow-1 d-flex flex-column">
+                                    <span class="tax-count">@package.DurationDays <span data-key="days" data-en="Days" data-ar="أيام">Days</span></span>
+
+                                    <h6 class="tax-name mt-3" data-key="packageName_@package.Id" data-en="@package.Name" data-ar="@package.NameAr">
+                                        @package.Name <!-- Default to English -->
+                                    </h6>
+
+                                    <div class="tax-description flex-grow-1" data-key="packageDesc_@package.Id" data-en="@(package.Description != null && package.Description.Length > 150 ? package.Description.Substring(0, 150) + "..." : package.Description)" data-ar="@(package.DescriptionAr != null && package.DescriptionAr.Length > 150 ? package.DescriptionAr.Substring(0, 150) + "..." : package.DescriptionAr)">
+                                        @(package.Description != null && package.Description.Length > 150 ? package.Description.Substring(0, 150) + "..." : package.Description) <!-- Default to English -->
+                                    </div>
+
+                                    <div class="price-info mt-auto pt-2">
+                                        @if (package.PriceAfterDiscount.HasValue && package.PriceAfterDiscount < package.PriceBeforeDiscount)
+                                        {
+                                            <span class="text-danger text-decoration-line-through me-2">@package.PriceBeforeDiscount.ToString("C")</span>
+                                            <span class="fw-bold fs-5 text-success">@package.PriceAfterDiscount.Value.ToString("C")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="fw-bold fs-5 text-primary">@package.PriceBeforeDiscount.ToString("C")</span>
+                                        }
+                                        <small class="text-muted d-block" data-key="priceNote" data-en="Price approximation" data-ar="السعر تقريبي"></small>
+                                    </div>
+
+                                    <a asp-action="PackageDetails" asp-route-id="@package.Id" class="tax-link mt-3" data-key="viewDetailsLink" data-en="View Package Details" data-ar="عرض تفاصيل الباقة">View Package Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 text-center text-muted py-5">
+                        <i class="fas fa-info-circle fa-2x mb-3"></i>
+                        <p data-key="noPackagesAvailable" data-en="There are no travel packages currently available for purchase. Please check back later." data-ar="لا توجد باقات سفر متاحه حاليا للشراء يرجى التحقق لاحقا">There are no travel packages currently available for purchase. Please check back later.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section (Remains the Same) -->
+    <section id="why-choose-us" class="section-padding choose-us">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title mb-3" data-aos="fade-up" data-en="Why Choose Almazaya Travel?" data-ar="لماذا تختار المزایا للسفر؟">Why Choose Almazaya Travel?</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200" data-en="We're committed to making your Southeast Asian journey unforgettable" data-ar="نحن ملتزمون بجعل رحلتك إلى جنوب شرق آسيا لا تُنسى">We're committed to making your Southeast Asian journey unforgettable</p>
+            </div>
+            <div class="row g-4">
+                <!-- Feature boxes remain the same -->
+                <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon"><i class="fas fa-medal"></i></div>
+                        <h5 data-en="Expert Guidance" data-ar="إرشاد الخبراء">Expert Guidance</h5>
+                        <p data-en="Our local experts ensure authentic experiences and insider access to hidden gems." data-ar="يضمن خبراؤنا المحليون تجارب أصيلة ووصولاً حصريًا إلى الكنوز المخفية.">
+                            Our local experts ensure authentic experiences and insider access to hidden gems.
+
+                        </p>
+                        <div class="counter" data-target="1000">0</div>
+                        <span class="counter-label" data-en="Happy Travelers" data-ar="مسافرون سعداء">Happy Travelers</span>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h5 data-en="Licensed & Insured" data-ar="مرخّص ومؤمَّن">Licensed & Insured</h5>
+                        <p data-en="Fully licensed in Saudi Arabia with comprehensive travel insurance for peace of mind." data-ar="مرخّص بالكامل في المملكة العربية السعودية مع تأمين سفر شامل لراحة البال.">Fully licensed in Saudi Arabia with comprehensive travel insurance for peace of mind.</p>
+                        <div class="counter" data-target="3">0</div>
+                        <span class="counter-label" data-en="Years Experience" data-ar="سنوات خبرة">Years Experience</span>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                        <h5 data-en="24/7 Support" data-ar="دعم على مدار الساعة">24/7 Support</h5>
+                        <p data-en="Round-the-clock assistance in Arabic and English throughout your entire journey." data-ar="مساعدة متوفرة على مدار الساعة باللغتين العربية والإنجليزية طوال رحلتك.">Round-the-clock assistance in Arabic and English throughout your entire journey.</p>
+                        <div class="counter" data-target="24">0</div>
+                        <span class="counter-label" data-en="Hours Support" data-ar="ساعات دعم">Hours Support</span>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="800">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon"><i class="fas fa-money-bill-wave"></i></div>
+                        <h5 data-en="Best Value" data-ar="أفضل قيمة">Best Value</h5>
+                        <p data-en="CCompetitive pricing with no hidden fees and flexible payment options available." data-ar="أسعار تنافسية بدون رسوم خفية وخيارات دفع مرنة متاحة.">Competitive pricing with no hidden fees and flexible payment options available..</p>
+                        <div class="counter" data-target="98">0</div>
+                        <span class="counter-label" data-en="% Satisfaction" data-ar="٪ رضا">% Satisfaction</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section (Remains the Same, but form POST is not handled by Home Controller) -->
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title mb-3" data-aos="fade-up" data-en="Get In Touch" data-ar="تواصل معنا">Get In Touch</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200" data-en="Ready to start your Southeast Asian adventure? Contact our travel experts today" data-ar="هل أنت مستعد لبدء مغامرتك في جنوب شرق آسيا؟ تواصل مع خبراء السفر لدينا اليوم">Ready to start your Southeast Asian adventure? Contact our travel experts today</p>
+            </div>
+            <div class="row g-4 justify-content-center align-items-center">
+                <div class="col-lg-9" data-aos="fade-up">
+                    <div class="contact-form-container">
+                        <!-- The existing form sending data via JS to WhatsApp remains -->
+                        <form class="contact-form" id="contactForm">
+                            <div class="row g-4 justify-content-center align-items-center">
+                                <div class="col-md-6"><div class="form-floating"><input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name"><label for="firstName" data-en="First Name *" data-ar="الاسم الأول *">First Name *</label></div></div>
+                                <div class="col-md-6"><div class="form-floating"><input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name"><label for="lastName" data-en="Last Name *" data-ar="اسم العائلة *">Last Name *</label></div></div>
+                                <div class="col-md-6"><div class="form-floating"><input type="email" class="form-control" id="email" name="email" placeholder="Email"><label for="email" data-en="Email Address *" data-ar="البريد الإلكتروني *">Email *</label></div></div>
+                                <div class="col-md-6"><div class="form-floating"><input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone"><label for="phone" data-en="Phone Number *" data-ar="رقم الهاتف *">Phone *</label></div></div>
+                                <div class="col-12"><div class="form-floating"><select class="form-select" id="destination" name="destination"><option value="">Choose...</option><!-- Options remain --></select><label for="destination" data-en="Preferred Destination *" data-ar="الوجهة المفضلة *">Destination *</label></div></div>
+                                <div class="col-md-6"><div class="form-floating"><input type="date" class="form-control" id="travelDate" name="travelDate"><label for="travelDate" data-en="Preferred Travel Date *" data-ar="تاريخ السفر المفضل *">Date *</label></div></div>
+                                <div class="col-md-6"><div class="form-floating"><select class="form-select" id="travelers" name="travelers"><option value="">Number...</option><!-- Options remain --></select><label for="travelers" data-en="Number of Travelers *" data-ar="عدد المسافرين *">Travelers *</label></div></div>
+                                <div class="col-12"><div class="form-floating"><textarea class="form-control" id="message" name="message" placeholder="Questions" style="height: 120px"></textarea><label for="message" data-en="Additional Questions" data-ar="أسئلة إضافية">Questions</label></div></div>
+                                <div class="col-12"><button type="submit" class="btn btn-primary btn-lg btn-submit w-100"><i class="fas fa-paper-plane me-2"></i> <span data-key="sendMessageBtn" data-en="Send Message" data-ar="إرسال الرسالة">Send Message</span></button></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer is in _Layout.cshtml -->
+@section Scripts {
+    <!-- index.js handles translation, smooth scroll, counters, form validation etc. -->
+    <!-- Make sure index.js is loaded in _Layout.cshtml -->
+}
+

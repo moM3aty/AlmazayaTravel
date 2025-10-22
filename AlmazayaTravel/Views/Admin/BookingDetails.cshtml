@@ -1,0 +1,124 @@
+﻿@model AlmazayaTravel.Models.Booking
+@{
+    ViewData["Title"] = "Booking Details";
+    Layout = "_AdminLayout";
+}
+
+<h1 data-key="DetailsTitle" data-en="Booking Details" data-ar="تفاصيل الحجز">Booking Details</h1>
+<hr />
+
+@if (Model == null)
+{
+    <div class="alert alert-warning" role="alert" data-key="BookingNotFound" data-en="Booking not found." data-ar="الحجز غير موجود.">
+        Booking not found.
+    </div>
+    <a asp-action="BookingsIndex" class="btn btn-secondary rounded-pill mt-3">
+        <i class="fas fa-arrow-left me-1"></i> <span data-key="BackToListBtn" data-en="Back to Bookings List" data-ar="العودة لقائمة الحجوزات">Back to Bookings List</span>
+    </a>
+}
+else
+{
+    <div class="card shadow-sm rounded-3 mb-4">
+        <div class="card-header bg-light py-3">
+            <h5 class="mb-0" data-key="BookingInfo" data-en="Booking Information" data-ar="معلومات الحجز">Booking Information</h5>
+        </div>
+        <div class="card-body p-4">
+            <dl class="row mb-0">
+                <dt class="col-sm-3" data-key="BookingId" data-en="Booking ID" data-ar="معرف الحجز">Booking ID</dt>
+                <dd class="col-sm-9">@Model.Id</dd>
+
+                <dt class="col-sm-3" data-key="BookingDate" data-en="Booking Date" data-ar="تاريخ الحجز">Booking Date</dt>
+                <dd class="col-sm-9">@Model.BookingDate.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")</dd>
+
+                <dt class="col-sm-3" data-key="PaymentStatus" data-en="Payment Status" data-ar="حالة الدفع">Payment Status</dt>
+                <dd class="col-sm-9">
+                    @if (Model.PaymentStatus?.ToLower() == "completed")
+                    {
+                        <span class="badge bg-success fs-6" data-key="Paid" data-en="Paid" data-ar="مدفوع">Paid</span>
+                    }
+                    else if (Model.PaymentStatus?.ToLower() == "failed")
+                    {
+
+                        <span class="badge bg-danger fs-6" data-key="Failed" data-en="Failed" data-ar="فشل">Failed</span>
+                    }
+                    else
+                    {
+
+                        <span class="badge bg-warning text-dark fs-6" data-key="Pending" data-en="Pending" data-ar="قيد الانتظار">Pending</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-3" data-key="AmountPaid" data-en="Amount Paid" data-ar="المبلغ المدفوع">Amount Paid</dt>
+                <dd class="col-sm-9">@(Model.AmountPaid?.ToString("C") ?? "-")</dd>
+
+                <dt class="col-sm-3" data-key="TransactionId" data-en="Transaction ID" data-ar="معرف المعاملة">Transaction ID</dt>
+                <dd class="col-sm-9">@(Model.PaymentTransactionId ?? "-")</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="card shadow-sm rounded-3 mb-4">
+        <div class="card-header bg-light py-3">
+            <h5 class="mb-0" data-key="ClientInfo" data-en="Client Information" data-ar="معلومات العميل">Client Information</h5>
+        </div>
+        <div class="card-body p-4">
+            <dl class="row mb-0">
+                <dt class="col-sm-3" data-key="ClientName" data-en="Client Name" data-ar="اسم العميل">Client Name</dt>
+                <dd class="col-sm-9">@Model.ClientName</dd>
+
+                <dt class="col-sm-3" data-key="Phone" data-en="Phone" data-ar="الهاتف">Phone</dt>
+                <dd class="col-sm-9">@Model.PhoneNumber</dd>
+
+                <dt class="col-sm-3" data-key="Email" data-en="Email" data-ar="البريد">Email</dt>
+                <dd class="col-sm-9">@Model.Email</dd>
+
+                <dt class="col-sm-3" data-key="Adults" data-en="Adults" data-ar="بالغون">Adults</dt>
+                <dd class="col-sm-9">@Model.Adults</dd>
+
+                <dt class="col-sm-3" data-key="Children" data-en="Children" data-ar="أطفال">Children</dt>
+                <dd class="col-sm-9">@Model.Children</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="card shadow-sm rounded-3">
+        <div class="card-header bg-light py-3">
+            <h5 class="mb-0" data-key="PackageInfo" data-en="Package Information" data-ar="معلومات الباقة">Package Information</h5>
+        </div>
+        <div class="card-body p-4">
+            @if (Model.TripPackage != null)
+            {
+                <dl class="row mb-0">
+                    <dt class="col-sm-3" data-key="PackageName" data-en="Package Name" data-ar="اسم الباقة">Package Name</dt>
+                    <dd class="col-sm-9">@Model.TripPackage.Name</dd>
+
+                    <dt class="col-sm-3" data-key="Destination" data-en="Destination" data-ar="الوجهة">Destination</dt>
+                    <dd class="col-sm-9">@Model.TripPackage.DestinationCountry</dd>
+
+                    <dt class="col-sm-3" data-key="Duration" data-en="Duration" data-ar="المدة">Duration</dt>
+                    <dd class="col-sm-9"><span data-key="Days" data-en="Days" data-ar="أيام">@Model.TripPackage.DurationDays Days</span></dd>
+                </dl>
+            }
+            else
+            {
+                <p class="text-muted" data-key="PackageNotAvailable" data-en="Package details not available." data-ar="تفاصيل الباقة غير متوفرة.">Package details not available.</p>
+            }
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="d-flex justify-content-between">
+        <a asp-action="BookingsIndex" class="btn btn-secondary rounded-pill px-4">
+            <i class="fas fa-arrow-left me-1"></i> <span data-key="BackToListBtn" data-en="Back to Bookings List" data-ar="العودة لقائمة الحجوزات">Back to Bookings List</span>
+        </a>
+        <!-- Add button for generating invoice if needed -->
+        <button type="button" onclick="window.print();" class="btn btn-info rounded-pill px-4">
+            <i class="fas fa-print me-1"></i> <span data-key="PrintBtn" data-en="Print / Generate Invoice" data-ar="طباعة / إنشاء فاتورة">Print / Generate Invoice</span>
+        </button>
+    </div>
+}
+
+@section Scripts {
+    <!-- Translation handled globally by admin-dashboard.js -->
+}

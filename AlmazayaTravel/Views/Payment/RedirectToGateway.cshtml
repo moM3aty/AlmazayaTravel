@@ -1,0 +1,96 @@
+﻿@{
+    Layout = null; // No layout for this intermediate page
+    ViewData["Title"] = "Redirecting to Payment Gateway...";
+    var paymentUrl = ViewBag.PaymentUrl as string;
+    var paymentParams = ViewBag.PaymentParams as Dictionary<string, string>;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        form {
+            display: none;
+        }
+        /* Hide the form */
+    </style>
+</head>
+<body onload="document.getElementById('paymentForm').submit();">
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        <p>Please wait while we securely redirect you to the payment page.</p>
+        <div class="spinner"></div>
+        <p><small>Do not refresh or close this window.</small></p>
+    </div>
+
+    @if (paymentUrl != null && paymentParams != null)
+    {
+        <form id="paymentForm" action="@paymentUrl" method="POST">
+            @foreach (var param in paymentParams)
+            {
+                <input type="hidden" name="@param.Key" value="@param.Value" />
+            }
+            <noscript>
+                <p>JavaScript is required to proceed with the payment automatically.</p>
+                <button type="submit">Click here to proceed manually</button>
+            </noscript>
+        </form>
+    }
+    else
+    {
+        <div class="container" style="border: 1px solid red; background-color: #ffeeee;">
+            <h1>Error</h1>
+            <p>Payment parameters are missing. Cannot redirect.</p>
+            <a href="/">Go back home</a>
+        </div>
+    }
+</body>
+</html>

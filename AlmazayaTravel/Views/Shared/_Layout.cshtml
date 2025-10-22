@@ -1,0 +1,264 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Almazaya Travel</title> <!-- Dynamic Title -->
+    <!-- SEO Meta Tags (Consider moving static ones here or using ViewBag/ViewData for dynamic ones) -->
+    <meta name="description" content="Almazaya Travel is a licensed travel agency in Saudi Arabia, offering customized trips and tours to Malaysia, Indonesia, Thailand, and Egypt. Discover extraordinary destinations with expert guidance and 24/7 support." />
+    <meta name="keywords" content="Almazaya Travel, travel agency Saudi Arabia, Malaysia tours, Indonesia trips, Thailand holidays, Egypt travel packages, Southeast Asia travel, affordable tours, licensed travel agency" />
+    <meta name="author" content="Almazaya Travel" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="~/images/logo.png" type="image/png"> <!-- Use ~ for root path -->
+    <!-- Bootstrap CSS -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" /> <!-- Use ~ for root path -->
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="~/css/all.min.css" /> <!-- Use ~ for root path -->
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="~/css/index.css" rel="stylesheet" /> <!-- Use ~ for root path -->
+    @await RenderSectionAsync("Styles", required: false) <!-- Section for page-specific styles -->
+
+</head>
+<body>
+    <!-- Navbar -->
+    <nav id="main-nav" class="navbar navbar-expand-lg text-white fixed-top py-1">
+        <div class="container">
+            <!-- Use asp-controller and asp-action for links -->
+            <a class="navbar-brand fw-bold text-white d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                <img src="~/images/logo.png" alt="Logo" class="logo-img me-2"> <!-- Use ~ -->
+                Almazaya Travel
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse text-center mt-5 mt-lg-0 " id="navbarNav">
+                <ul class="navbar-nav mx-auto text-white d-flex justify-content-center align-items-center flex-column gap-4 gap-lg-2 flex-lg-row">
+                    <li class="nav-item">
+                        <!-- Use asp-fragment for anchor links within the same controller -->
+                        <a class="nav-link text-white" data-ar="الرئيسية" data-en="Home" asp-controller="Home" asp-action="Index" asp-fragment="home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" data-ar="من نحن" data-en="About" asp-controller="Home" asp-action="Index" asp-fragment="about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" data-ar="الرحلات" data-en="Travels" asp-controller="Home" asp-action="Index" asp-fragment="travels">Travels</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" data-ar="لماذا نحن" data-en="Why Choose Us" asp-controller="Home" asp-action="Index" asp-fragment="why-choose-us">Why Choose Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" data-ar="سياسة الإلغاء" data-en="Cancellation Policy" asp-controller="Home" asp-action="CancellationPolicy">Policy</a> <!-- Link to Policy page -->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" data-ar="اتصل بنا" data-en="Contact" asp-controller="Home" asp-action="Index" asp-fragment="contact">Contact</a>
+                    </li>
+                </ul>
+
+                <button class="btn translate-btn mt-4 mt-lg-0" id="translateBtn" data-lang="en">
+                    <i class="fas fa-globe"></i>
+                    <span class="me-2" data-en="العربية" data-ar="English"></span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Scroll Progress Indicator (Added Dynamically via JS) -->
+
+    <div>
+        <!-- RenderBody() injects the content of the specific View -->
+        @RenderBody()
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-light py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="footer-brand">
+                        <a class="navbar-brand fw-bold text-white d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                            <img src="~/images/logo.png" alt="Logo" class="logo-img me-2"> <!-- Use ~ -->
+                            Almazaya Travel
+                        </a>
+                        <p class="mb-4"
+                           data-en="Your trusted partner for exploring the wonders of Southeast Asia. Licensed and registered in Saudi Arabia."
+                           data-ar="شريكك الموثوق لاستكشاف عجائب جنوب شرق آسيا. مرخص ومسجل في المملكة العربية السعودية.">
+                            Your trusted partner for exploring the wonders of Southeast Asia.
+                            Licensed and registered in Saudi Arabia.
+                        </p>
+                        <div class="social-links">
+                            <!-- Add target="_blank" and rel="noopener noreferrer" for external links -->
+                            <a href="https://www.facebook.com/share/1BHYk7nLL3/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://x.com/almazayatravel?s=11" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.instagram.com/almazayatravel?igsh=MTA3ZThzYXJlMTRqdQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.tiktok.com/@@almazaya.travel?_t=ZS-8zZ0k34N0l7&_r=1" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="footer-title" data-en="Quick Links" data-ar="روابط سريعة">Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a asp-controller="Home" asp-action="Index" asp-fragment="home" data-en="Home" data-ar="الرئيسية">Home</a></li>
+                        <li><a asp-controller="Home" asp-action="Index" asp-fragment="about" data-en="About Us" data-ar="معلومات عنا">About Us</a></li>
+                        <li><a asp-controller="Home" asp-action="Index" asp-fragment="travels" data-en="Travel Packages" data-ar="باقات السفر">Travel Packages</a></li>
+                        <li><a asp-controller="Home" asp-action="Index" asp-fragment="why-choose-us" data-en="Why Choose Us" data-ar="لماذا تختارنا">Why Choose Us</a></li>
+                        <li><a asp-controller="Home" asp-action="CancellationPolicy" data-en="Policy" data-ar="السياسة">Policy</a></li>
+                        <li><a asp-controller="Home" asp-action="Index" asp-fragment="contact" data-en="Contact" data-ar="اتصل بنا">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="footer-title" data-en="Destinations" data-ar="الوجهات">Destinations</h6>
+                    <ul class="footer-links">
+                        <li><a asp-controller="Home" asp-action="Malaysia" data-en="Malaysia" data-ar="ماليزيا">Malaysia</a></li>
+                        <li><a asp-controller="Home" asp-action="Indonesia" data-en="Indonesia" data-ar="إندونيسيا">Indonesia</a></li>
+                        <li><a asp-controller="Home" asp-action="Thailand" data-en="Thailand" data-ar="تايلاند">Thailand</a></li>
+                        <li><a asp-controller="Home" asp-action="Egypt" data-en="Egypt" data-ar="مصر">Egypt</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h6 class="footer-title" data-en="Contact Info" data-ar="معلومات الاتصال">Contact Info</h6>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span data-en="Dammam, Saudi Arabia" data-ar="الدمام المملكة العربية السعودية">Dammam, Saudi Arabia</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+966567638260</span>
+                        </div>
+                        <!-- Add Email if available -->
+                        <!-- <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@almazayatravel.com</span>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0" data-en="&copy; @DateTime.Now.Year Almazaya Travel. All rights reserved."
+                       data-ar="&copy; @DateTime.Now.Year المزایا ترافل. جميع الحقوق محفوظة.">
+                        &copy; @DateTime.Now.Year Almazaya Travel. All rights reserved.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0" data-en="Licensed Travel Agency in Saudi Arabia"
+                       data-ar="وكالة سفر مرخصة في المملكة العربية السعودية">
+                        Licensed Travel Agency in Saudi Arabia
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/966567638260" target="_blank" rel="noopener noreferrer" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="~/js/bootstrap.bundle.min.js"></script> <!-- Use ~ -->
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="~/js/index.js"></script> <!-- Use ~ -->
+    <!-- Add jQuery and Validation Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Example CDN -->
+    <partial name="_ValidationScriptsPartial" /> <!-- Include validation scripts partial -->
+    <!-- Page Specific Scripts Section -->
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <!-- Inline script for smooth scroll and active nav link (can be moved to index.js) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"], a[asp-fragment]').forEach(anchor => {
+                anchor.addEventListener("click", function (e) {
+                    let targetId = this.getAttribute("href");
+                    if (this.hasAttribute('asp-fragment')) {
+                        targetId = '#' + this.getAttribute('asp-fragment');
+                    }
+
+                    if (targetId && targetId.startsWith('#')) {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            e.preventDefault(); // Prevent default only if target exists on the page
+                            const navbarHeight = document.querySelector(".navbar")?.offsetHeight || 0;
+                            const targetPosition = targetElement.offsetTop - navbarHeight;
+                            window.scrollTo({ top: targetPosition, behavior: "smooth" });
+
+                            // Optional: Close navbar on mobile after click
+                             const navbarCollapse = document.querySelector(".navbar-collapse");
+                             if (navbarCollapse && navbarCollapse.classList.contains("show")) {
+                                 new bootstrap.Collapse(navbarCollapse).hide();
+                             }
+                        }
+                        // If targetElement doesn't exist, allow default behavior (might be navigating to another page)
+                    }
+                });
+            });
+
+            // Active Nav Link Highlighting (Simplified)
+            function updateActiveNavLink() {
+                 // Remove active class from all first
+                document.querySelectorAll(".nav-link").forEach(link => link.classList.remove("active"));
+
+                const currentPath = window.location.pathname;
+                const currentHash = window.location.hash;
+
+                document.querySelectorAll(".nav-link").forEach(link => {
+                    const linkPath = link.getAttribute("href");
+                    const linkFragment = link.getAttribute("asp-fragment") ? '#' + link.getAttribute("asp-fragment") : null;
+
+                    // Match full path first (for separate pages like Policy)
+                    if (linkPath === currentPath && currentPath !== '/' && currentPath !== '/Home' && currentPath !== '/Home/Index') {
+                        link.classList.add("active");
+                        return; // Stop checking if full path matches
+                    }
+
+                    // Match fragment on the home page
+                    if ((currentPath === '/' || currentPath === '/Home' || currentPath === '/Home/Index') && linkFragment && currentHash === linkFragment) {
+                         link.classList.add("active");
+                    }
+                    // Add default active for Home if no hash or no other match
+                    else if ((currentPath === '/' || currentPath === '/Home' || currentPath === '/Home/Index') && (linkFragment === 'home' || linkFragment === null) && !currentHash) {
+                         // Heuristic: If it links to home/index without a fragment, make it active when on root
+                         if (link.getAttribute("asp-action") === "Index" && (linkFragment === 'home' || linkFragment === null)) {
+                              link.classList.add("active");
+                         }
+                    }
+
+                });
+
+
+                 // More robust way requires calculating current section based on scroll position
+                 // (Similar to your original JS, but might need adjustments for ASP.NET paths/fragments)
+            }
+
+
+            window.addEventListener("scroll", updateActiveNavLink);
+            updateActiveNavLink(); // Initial call
+        });
+    </script>
+
+
+</body>
+</html>
