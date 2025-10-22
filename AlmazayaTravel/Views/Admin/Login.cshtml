@@ -1,13 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Admin Login";
-    Layout = null; // No main layout for login page
+    Layout = null;
     var returnUrl = ViewData["ReturnUrl"] as string;
     var currentLang = System.Globalization.CultureInfo.CurrentUICulture.Name.StartsWith("ar") ? "ar" : "en";
 }
 
 <!DOCTYPE html>
 <html lang="@currentLang">
- <!-- Set lang dynamically -->
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -86,7 +85,6 @@
 
         <form asp-action="Login" method="post">
             @Html.AntiForgeryToken()
-            <!-- Display general login errors -->
             <div asp-validation-summary="ModelOnly" class="alert alert-danger alert-sm p-2 text-center" role="alert"></div>
 
             <input type="hidden" name="returnUrl" value="@returnUrl" />
@@ -112,7 +110,6 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Apply translation on load for this specific page -->
     <script>
         function applyLoginTranslation(lang) {
             console.log(`Applying login translation for: ${lang}`);
@@ -121,31 +118,29 @@
             document.body.classList.toggle('rtl', lang === 'ar');
 
             document.querySelectorAll('[data-key]').forEach(el => {
-                const text = el.getAttribute(`data-${lang}`) || el.getAttribute('data-en'); // Fallback to EN
+                const text = el.getAttribute(`data-${lang}`) || el.getAttribute('data-en');
                 if (text) {
                     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                          if(el.placeholder !== undefined) el.placeholder = text;
                     } else if (el.tagName === 'LABEL' && el.parentElement?.classList.contains('form-floating')) {
-                         el.textContent = text; // Update label text
+                         el.textContent = text;
                     } else if (el.tagName === 'SPAN' && el.closest('button')) {
-                         el.textContent = text; // Update text inside button span
+                         el.textContent = text;
                     }
-                     else if (el.tagName === 'TITLE') {
-                          document.title = text + " - AlmazayaTravel"; // Update page title
-                     }
-                     else {
-                         el.textContent = text; // For h2, a, etc.
+                      else if (el.tagName === 'TITLE') {
+                           document.title = text + " - AlmazayaTravel";
+                      }
+                      else {
+                         el.textContent = text;
                     }
                 }
             });
             console.log("Login translation applied.");
         }
         document.addEventListener('DOMContentLoaded', function () {
-           // Use stored preference or default
-            const preferredLang = localStorage.getItem('adminLang') || 'en';
-            applyLoginTranslation(preferredLang);
+           const preferredLang = localStorage.getItem('adminLang') || 'en';
+           applyLoginTranslation(preferredLang);
         });
     </script>
 </body>
 </html>
-

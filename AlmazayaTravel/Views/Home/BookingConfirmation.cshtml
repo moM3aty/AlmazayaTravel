@@ -1,7 +1,6 @@
 ﻿@model AlmazayaTravel.Models.Booking
 @{
     ViewData["Title"] = "Booking Confirmation";
-    // Layout = "_Layout"; // Or a simpler layout if preferred
 }
 
 <header class="page-header-simple bg-light py-4 mb-4">
@@ -40,16 +39,14 @@
                         </dl>
                         <hr>
                         @{
-                            var totalAmount = (Model.TripPackage != null) ? (Model.TripPackage.PriceAfterDiscount ?? Model.TripPackage.PriceBeforeDiscount) * Model.Adults : 0; // Basic calculation
+                            var totalAmount = (Model.TripPackage != null) ? (Model.TripPackage.PriceAfterDiscount ?? Model.TripPackage.PriceBeforeDiscount) * Model.Adults : 0;
                         }
                         <div class="text-end mb-3">
-                            <h4 data-key="TotalAmount" data-en="Total Amount" data-ar="المبلغ الإجمالي">Total Amount: <span class="text-primary fw-bold">@totalAmount.ToString("C")</span></h4>
+                            <h4 data-key="TotalAmount" data-en="Total Amount" data-ar="المبلغ الإجمالي">Total Amount: <span class="text-primary fw-bold">@totalAmount.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ar-SA"))</span></h4>
                             <small class="text-muted d-block" data-key="PriceNoteConfirm" data-en="(Subject to final confirmation)" data-ar="(خاضع للتأكيد النهائي)"></small>
                         </div>
 
-                        <!-- Payment Initiation Button/Form -->
                         <form asp-controller="Payment" asp-action="Initiate" method="get">
-                            <!-- Or POST if preferred -->
                             <input type="hidden" name="bookingId" value="@Model.Id" />
                             <input type="hidden" name="amount" value="@totalAmount" />
                             <div class="d-grid">
@@ -67,5 +64,4 @@
 </div>
 
 @section Scripts {
-    <!-- Translation handled globally by index.js -->
 }

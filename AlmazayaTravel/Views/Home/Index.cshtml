@@ -1,16 +1,13 @@
-﻿@model IEnumerable<AlmazayaTravel.Models.TripPackage> // Expecting a list of Trip Packages
+﻿@model IEnumerable<AlmazayaTravel.Models.TripPackage>
 @{
     ViewData["Title"] = "Home Page";
-    // Layout is set in _ViewStart.cshtml
 }
 
-<!-- Hero Section (Remains Mostly the Same) -->
 <header class="hero-section d-flex flex-column justify-content-center align-items-center text-center text-white" id="home">
     <h6 class="mb-2" data-en="EXPLORE YOUR LIFE" data-ar="اكتشف حياتك" data-aos="fade-up" data-aos-delay="100">EXPLORE YOUR LIFE</h6>
     <h1 data-aos="fade-up" data-aos-delay="100" class="mb-3" data-en="Discover & book extraordinary trips" data-ar="اكتشف واحجز رحلات استثنائية">Discover & book extraordinary trips</h1>
     <p data-aos="fade-up" data-aos-delay="100" class="mb-4 description" data-en="Save up to 50% on the best attractions, tours and activities with Almazaya" data-ar="وفر حتى 50% على أفضل المزارات والجولات والأنشطة مع Almazaya">Save up to 50%...</p>
 
-    <!-- Guarantees (Remains the Same) -->
     <div class="d-flex justify-content-center flex-wrap gap-3 text-white small guarantees mt-4 mb-5">
         <div data-aos="fade-up" data-aos-delay="100" class="mx-3 box h-100 p-4 text-center">
             <i class="fas fa-tag fa-2x mb-3"></i>
@@ -26,7 +23,6 @@
         </div>
     </div>
 
-    <!-- Hero Buttons (Remains the Same) -->
     <div data-aos="fade-up" data-aos-delay="100" class="hero-buttons mt-4 d-flex flex-wrap gap-3 justify-content-center align-items-center" data-aos-delay="600">
         <a data-ar="استكشف الباقات" data-en="Explore Packages" href="#travels" class="btn btn-primary btn-lg mx-3">Explore Packages</a>
         <a data-ar="اعرف المزيد" data-en="Learn More" href="#about" class="btn btn-outline-light btn-lg">Learn More</a>
@@ -34,7 +30,6 @@
 </header>
 
 <main>
-    <!-- About Section (Remains the Same) -->
     <section class="section-padding about" id="about">
         <div class="container py-5">
             <div class="row g-4 align-items-center justify-content-center">
@@ -76,7 +71,6 @@
         </div>
     </section>
 
-    <!-- *** Travels Section (Updated Dynamically) *** -->
     <section class="section-padding travels" id="travels">
         <div class="container">
             <div class="section-title" data-aos="zoom-in" data-aos-delay="800">
@@ -99,22 +93,22 @@
                                     <span class="tax-count">@package.DurationDays <span data-key="days" data-en="Days" data-ar="أيام">Days</span></span>
 
                                     <h6 class="tax-name mt-3" data-key="packageName_@package.Id" data-en="@package.Name" data-ar="@package.NameAr">
-                                        @package.Name <!-- Default to English -->
+                                        @package.Name
                                     </h6>
 
                                     <div class="tax-description flex-grow-1" data-key="packageDesc_@package.Id" data-en="@(package.Description != null && package.Description.Length > 150 ? package.Description.Substring(0, 150) + "..." : package.Description)" data-ar="@(package.DescriptionAr != null && package.DescriptionAr.Length > 150 ? package.DescriptionAr.Substring(0, 150) + "..." : package.DescriptionAr)">
-                                        @(package.Description != null && package.Description.Length > 150 ? package.Description.Substring(0, 150) + "..." : package.Description) <!-- Default to English -->
+                                        @(package.Description != null && package.Description.Length > 150 ? package.Description.Substring(0, 150) + "..." : package.Description)
                                     </div>
 
                                     <div class="price-info mt-auto pt-2">
                                         @if (package.PriceAfterDiscount.HasValue && package.PriceAfterDiscount < package.PriceBeforeDiscount)
                                         {
-                                            <span class="text-danger text-decoration-line-through me-2">@package.PriceBeforeDiscount.ToString("C")</span>
-                                            <span class="fw-bold fs-5 text-success">@package.PriceAfterDiscount.Value.ToString("C")</span>
+                                            <span class="text-danger text-decoration-line-through me-2">@package.PriceBeforeDiscount.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ar-SA"))</span>
+                                            <span class="fw-bold fs-5 text-success">@package.PriceAfterDiscount.Value.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ar-SA"))</span>
                                         }
                                         else
                                         {
-                                            <span class="fw-bold fs-5 text-primary">@package.PriceBeforeDiscount.ToString("C")</span>
+                                            <span class="fw-bold fs-5 text-primary">@package.PriceBeforeDiscount.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ar-SA"))</span>
                                         }
                                         <small class="text-muted d-block" data-key="priceNote" data-en="Price approximation" data-ar="السعر تقريبي"></small>
                                     </div>
@@ -136,7 +130,6 @@
         </div>
     </section>
 
-    <!-- Why Choose Us Section (Remains the Same) -->
     <section id="why-choose-us" class="section-padding choose-us">
         <div class="container">
             <div class="text-center mb-5">
@@ -144,7 +137,6 @@
                 <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200" data-en="We're committed to making your Southeast Asian journey unforgettable" data-ar="نحن ملتزمون بجعل رحلتك إلى جنوب شرق آسيا لا تُنسى">We're committed to making your Southeast Asian journey unforgettable</p>
             </div>
             <div class="row g-4">
-                <!-- Feature boxes remain the same -->
                 <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                     <div class="feature-box text-center">
                         <div class="feature-icon"><i class="fas fa-medal"></i></div>
@@ -188,7 +180,6 @@
         </div>
     </section>
 
-    <!-- Contact Section (Remains the Same, but form POST is not handled by Home Controller) -->
     <section id="contact" class="section-padding">
         <div class="container">
             <div class="text-center mb-5">
@@ -198,16 +189,15 @@
             <div class="row g-4 justify-content-center align-items-center">
                 <div class="col-lg-9" data-aos="fade-up">
                     <div class="contact-form-container">
-                        <!-- The existing form sending data via JS to WhatsApp remains -->
                         <form class="contact-form" id="contactForm">
                             <div class="row g-4 justify-content-center align-items-center">
                                 <div class="col-md-6"><div class="form-floating"><input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name"><label for="firstName" data-en="First Name *" data-ar="الاسم الأول *">First Name *</label></div></div>
                                 <div class="col-md-6"><div class="form-floating"><input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name"><label for="lastName" data-en="Last Name *" data-ar="اسم العائلة *">Last Name *</label></div></div>
                                 <div class="col-md-6"><div class="form-floating"><input type="email" class="form-control" id="email" name="email" placeholder="Email"><label for="email" data-en="Email Address *" data-ar="البريد الإلكتروني *">Email *</label></div></div>
                                 <div class="col-md-6"><div class="form-floating"><input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone"><label for="phone" data-en="Phone Number *" data-ar="رقم الهاتف *">Phone *</label></div></div>
-                                <div class="col-12"><div class="form-floating"><select class="form-select" id="destination" name="destination"><option value="">Choose...</option><!-- Options remain --></select><label for="destination" data-en="Preferred Destination *" data-ar="الوجهة المفضلة *">Destination *</label></div></div>
+                                <div class="col-12"><div class="form-floating"><select class="form-select" id="destination" name="destination"><option value="" data-en="Choose Destination..." data-ar="اختر الوجهة...">Choose...</option><option value="Malaysia" data-en="Malaysia" data-ar="ماليزيا">Malaysia</option><option value="Indonesia" data-en="Indonesia" data-ar="إندونيسيا">Indonesia</option><option value="Thailand" data-en="Thailand" data-ar="تايلاند">Thailand</option><option value="Egypt" data-en="Egypt" data-ar="مصر">Egypt</option><option value="Other" data-en="Other" data-ar="أخرى">Other</option></select><label for="destination" data-en="Preferred Destination *" data-ar="الوجهة المفضلة *">Destination *</label></div></div>
                                 <div class="col-md-6"><div class="form-floating"><input type="date" class="form-control" id="travelDate" name="travelDate"><label for="travelDate" data-en="Preferred Travel Date *" data-ar="تاريخ السفر المفضل *">Date *</label></div></div>
-                                <div class="col-md-6"><div class="form-floating"><select class="form-select" id="travelers" name="travelers"><option value="">Number...</option><!-- Options remain --></select><label for="travelers" data-en="Number of Travelers *" data-ar="عدد المسافرين *">Travelers *</label></div></div>
+                                <div class="col-md-6"><div class="form-floating"><select class="form-select" id="travelers" name="travelers"><option value="" data-en="Number of Travelers..." data-ar="عدد المسافرين...">Number...</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6+">6+</option></select><label for="travelers" data-en="Number of Travelers *" data-ar="عدد المسافرين *">Travelers *</label></div></div>
                                 <div class="col-12"><div class="form-floating"><textarea class="form-control" id="message" name="message" placeholder="Questions" style="height: 120px"></textarea><label for="message" data-en="Additional Questions" data-ar="أسئلة إضافية">Questions</label></div></div>
                                 <div class="col-12"><button type="submit" class="btn btn-primary btn-lg btn-submit w-100"><i class="fas fa-paper-plane me-2"></i> <span data-key="sendMessageBtn" data-en="Send Message" data-ar="إرسال الرسالة">Send Message</span></button></div>
                             </div>
@@ -219,9 +209,5 @@
     </section>
 </main>
 
-<!-- Footer is in _Layout.cshtml -->
 @section Scripts {
-    <!-- index.js handles translation, smooth scroll, counters, form validation etc. -->
-    <!-- Make sure index.js is loaded in _Layout.cshtml -->
 }
-

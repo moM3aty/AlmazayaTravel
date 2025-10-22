@@ -19,15 +19,10 @@
     <table class="table table-striped table-hover align-middle admin-table">
         <thead class="table-dark">
             <tr>
-                <th><span data-key="BookingId" data-en="Booking ID" data-ar="معرف الحجز">Booking ID</span></th>
-                <th><span data-key="PackageName" data-en="Package Name" data-ar="اسم الباقة">Package Name</span></th>
+                <th><span data-key="BookingId" data-en="ID" data-ar="المعرف">ID</span></th>
+                <th><span data-key="PackageName" data-en="Package" data-ar="الباقة">Package</span></th>
                 <th><span data-key="ClientName" data-en="Client Name" data-ar="اسم العميل">Client Name</span></th>
-                <th><span data-key="Phone" data-en="Phone" data-ar="الهاتف">Phone</span></th>
-                <th><span data-key="Email" data-en="Email" data-ar="البريد">Email</span></th>
-                <th><span data-key="Adults" data-en="Adults" data-ar="بالغون">Adults</span></th>
-                <th><span data-key="Children" data-en="Children" data-ar="أطفال">Children</span></th>
                 <th><span data-key="BookingDate" data-en="Booking Date" data-ar="تاريخ الحجز">Booking Date</span></th>
-                <th><span data-key="AmountPaid" data-en="Amount Paid" data-ar="المبلغ المدفوع">Amount Paid</span></th>
                 <th><span data-key="PaymentStatus" data-en="Payment Status" data-ar="حالة الدفع">Payment Status</span></th>
                 <th style="width: 100px;"><span data-key="Actions" data-en="Actions" data-ar="إجراءات">Actions</span></th>
             </tr>
@@ -41,23 +36,20 @@
                         <td>@booking.Id</td>
                         <td>@(booking.TripPackage?.Name ?? "N/A")</td>
                         <td>@booking.ClientName</td>
-                        <td>@booking.PhoneNumber</td>
-                        <td>@booking.Email</td>
-                        <td>@booking.Adults</td>
-                        <td>@booking.Children</td>
                         <td>@booking.BookingDate.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
-                        <td>@(booking.AmountPaid?.ToString("C") ?? "-")</td>
                         <td>
                             @if (booking.PaymentStatus?.ToLower() == "completed")
                             {
                                 <span class="badge bg-success" data-key="Paid" data-en="Paid" data-ar="مدفوع">Paid</span>
                             }
-                            else if (booking.PaymentStatus?.ToLower() == "failed")
+                            else if (booking.PaymentStatus?.ToLower() == "failed" || booking.PaymentStatus?.ToLower() == "verification failed")
                             {
+
                                 <span class="badge bg-danger" data-key="Failed" data-en="Failed" data-ar="فشل">Failed</span>
                             }
                             else
                             {
+
                                 <span class="badge bg-warning text-dark" data-key="Pending" data-en="Pending" data-ar="قيد الانتظار">Pending</span>
                             }
                         </td>
@@ -65,7 +57,6 @@
                             <a asp-action="BookingDetails" asp-route-id="@booking.Id" class="btn btn-sm btn-outline-info" title="View Details">
                                 <i class="fas fa-eye"></i> <span data-key="DetailsBtn" data-en="Details" data-ar="تفاصيل">Details</span>
                             </a>
-                            <!-- Add other actions like Cancel Booking if needed -->
                         </td>
                     </tr>
                 }
@@ -73,7 +64,7 @@
             else
             {
                 <tr>
-                    <td colspan="11" class="text-center text-muted py-4">
+                    <td colspan="6" class="text-center text-muted py-4">
                         <i class="fas fa-info-circle me-2"></i> <span data-key="NoBookings" data-en="No customer bookings found." data-ar="لم يتم العثور على حجوزات عملاء.">No customer bookings found.</span>
                     </td>
                 </tr>
@@ -83,5 +74,4 @@
 </div>
 
 @section Scripts {
-    <!-- Translation handled globally by admin-dashboard.js -->
 }

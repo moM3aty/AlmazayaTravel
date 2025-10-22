@@ -34,11 +34,9 @@
             <tr>
                 <th><span data-key="PackageName" data-en="Package Name" data-ar="اسم الباقة">Package Name</span></th>
                 <th><span data-key="Destination" data-en="Destination" data-ar="الوجهة">Destination</span></th>
-                <th><span data-key="Duration" data-en="Duration (Days)" data-ar="المدة (أيام)">Duration (Days)</span></th>
-                <th><span data-key="PriceBefore" data-en="Price (Before)" data-ar="السعر (قبل)">Price (Before)</span></th>
-                <th><span data-key="PriceAfter" data-en="Price (After)" data-ar="السعر (بعد)">Price (After)</span></th>
-                <th><span data-key="IsActive" data-en="Active" data-ar="نشط">Active</span></th>
-                <th><span data-key="Image" data-en="Image" data-ar="الصورة">Image</span></th>
+                <th><span data-key="Duration" data-en="Duration" data-ar="المدة">Duration</span></th>
+                <th><span data-key="Price" data-en="Price" data-ar="السعر">Price</span></th>
+                <th><span data-key="IsActive" data-en="Status" data-ar="الحالة">Status</span></th>
                 <th style="width: 150px;"><span data-key="Actions" data-en="Actions" data-ar="الإجراءات">Actions</span></th>
             </tr>
         </thead>
@@ -48,29 +46,38 @@
                 @foreach (var package in Model)
                 {
                     <tr>
-                        <td>@package.Name</td>
-                        <td>@package.DestinationCountry</td>
-                        <td>@package.DurationDays</td>
-                        <td>@package.PriceBeforeDiscount.ToString("N2")</td>
-                        <td>@(package.PriceAfterDiscount?.ToString("N2") ?? "-")</td>
-                        <td>
-                            @if (package.IsActive)
-                            {
-                                <span class="badge bg-success" data-key="Yes" data-en="Yes" data-ar="نعم">Yes</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-secondary" data-key="No" data-en="No" data-ar="لا">No</span>
-                            }
-                        </td>
                         <td>
                             @if (!string.IsNullOrEmpty(package.ImageUrl))
                             {
-                                <img src="@Url.Content("~" + package.ImageUrl)" alt="Package Image" class="img-thumbnail admin-table-img" onerror="this.style.display='none'" />
+                                <img src="@Url.Content("~" + package.ImageUrl)" alt="" class="img-thumbnail admin-table-img me-2" onerror="this.style.display='none'" />
+                            }
+                            @package.Name
+                            <span class="d-block small text-muted">(@package.NameAr)</span>
+                        </td>
+                        <td>
+                            @package.DestinationCountry
+                            <span class="d-block small text-muted">(@package.DestinationCountryAr)</span>
+                        </td>
+                        <td>@package.DurationDays <span data-key="days" data-en="Days" data-ar="أيام">Days</span></td>
+                        <td>
+                            @if (package.PriceAfterDiscount.HasValue && package.PriceAfterDiscount < package.PriceBeforeDiscount)
+                            {
+                                <span class="fw-bold text-success">@package.PriceAfterDiscount.Value.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ar-SA"))</span>
+                                <span class="text-danger text-decoration-line-through small ms-1">@package.PriceBeforeDiscount.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ar-SA"))</span>
                             }
                             else
                             {
-                                <span class="text-muted small" data-key="NoImage" data-en="No Image" data-ar="لا توجد صورة">No Image</span>
+                                <span class="fw-bold text-primary">@package.PriceBeforeDiscount.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ar-SA"))</span>
+                            }
+                        </td>
+                        <td>
+                            @if (package.IsActive)
+                            {
+                                <span class="badge bg-success" data-key="Active" data-en="Active" data-ar="نشط">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary" data-key="Inactive" data-en="Inactive" data-ar="غير نشط">Inactive</span>
                             }
                         </td>
                         <td>
@@ -83,7 +90,6 @@
                                 </button>
                             </div>
 
-                            <!-- Delete Modal -->
                             <div class="modal fade" id="deleteModal-@package.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@package.Id" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content shadow">
@@ -94,9 +100,9 @@
                                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p data-key="ConfirmDeleteMsg" data-en="Are you sure you want to delete the package" data-ar="هل أنت متأكد أنك تريد حذف الباقة">Are you sure you want to delete the package</p>
+                                            <p data-key="ConfirmDeleteMsg" data-en="Are you sure you want to delete the package" data-ar="هل أنت متأكد أنك تريد حذف الباقة">Are you sure...?</p>
                                             <p class="fw-bold">@package.Name?</p>
-                                            <p class="text-muted small" data-key="CannotUndo" data-en="This action cannot be undone." data-ar="لا يمكن التراجع عن هذا الإجراء.">This action cannot be undone.</p>
+                                            <p class="text-muted small" data-key="CannotUndo" data-en="This action cannot be undone." data-ar="لا يمكن التراجع عن هذا الإجراء.">Cannot undo.</p>
                                         </div>
                                         <div class="modal-footer border-0">
                                             <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">
@@ -119,7 +125,7 @@
             else
             {
                 <tr>
-                    <td colspan="8" class="text-center text-muted py-4">
+                    <td colspan="6" class="text-center text-muted py-4">
                         <i class="fas fa-info-circle me-2"></i> <span data-key="NoPackages" data-en="No packages found." data-ar="لم يتم العثور على باقات.">No packages found.</span>
                     </td>
                 </tr>
@@ -129,5 +135,4 @@
 </div>
 
 @section Scripts {
-    <!-- Translation handled globally by admin-dashboard.js -->
 }

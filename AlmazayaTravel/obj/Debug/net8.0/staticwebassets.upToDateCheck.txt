@@ -2,7 +2,6 @@ wwwroot\css\admin-dashboard.css
 wwwroot\css\all.min.css
 wwwroot\css\bootstrap.min.css
 wwwroot\css\index.css
-wwwroot\favicon.ico
 wwwroot\images\about-1.jpg
 wwwroot\images\about-2.jpg
 wwwroot\images\bali\img1.jpg
@@ -14,7 +13,6 @@ wwwroot\images\bali\img6.png
 wwwroot\images\bali\img7.png
 wwwroot\images\bali\img8.jpg
 wwwroot\images\bali\img9.jpg
-wwwroot\images\bookings\d450f2e4-a2c7-49fb-bda7-fbba765a933d.png
 wwwroot\images\cairo\img1.jpg
 wwwroot\images\cairo\img10.jpg
 wwwroot\images\cairo\img11.jpg
@@ -63,8 +61,6 @@ wwwroot\images\mala\img6.jpg
 wwwroot\images\mala\img7.jpg
 wwwroot\images\mala\img8.jpg
 wwwroot\images\mala\img9.jpeg
-wwwroot\images\packages\688e3c6c-1e62-4672-9a09-048c6d4c58bc_Screenshot 2025-10-22 134242.png
-wwwroot\images\packages\a5fd9b02-b955-4002-9507-b0e35e4b6821_Screenshot 2025-10-22 134242.png
 wwwroot\images\plane.svg
 wwwroot\images\shape-1-bg.png
 wwwroot\images\shape-2-bg.png

@@ -8,7 +8,6 @@ namespace AlmazayaTravel.Models
         [Key]
         public int Id { get; set; }
 
-        // --- Customer Information ---
         [Required(ErrorMessage = "Client name is required.")]
         [StringLength(100)]
         [Display(Name = "Client Name")]
@@ -33,18 +32,16 @@ namespace AlmazayaTravel.Models
 
         [Range(0, 100, ErrorMessage = "Number of children cannot be negative.")]
         [Display(Name = "Number of Children")]
-        public int Children { get; set; } = 0; // Default to 0 children
+        public int Children { get; set; } = 0;
 
-        // --- Trip Package Link ---
         [Required]
         [Display(Name = "Trip Package")]
-        public int TripPackageId { get; set; } // Foreign Key
+        public int TripPackageId { get; set; }
 
         [ForeignKey("TripPackageId")]
         [Display(Name = "Trip Package")]
-        public virtual TripPackage? TripPackage { get; set; } // Navigation Property
+        public virtual TripPackage? TripPackage { get; set; }
 
-        // --- Booking Status & Metadata ---
         [Required]
         [Display(Name = "Booking Date")]
         [DataType(DataType.DateTime)]
@@ -53,21 +50,18 @@ namespace AlmazayaTravel.Models
 
         [StringLength(50)]
         [Display(Name = "Payment Status")]
-        public string PaymentStatus { get; set; } = "Pending"; // e.g., Pending, Completed, Failed
+        public string PaymentStatus { get; set; } = "Pending";
 
         [StringLength(100)]
         [Display(Name = "Transaction ID")]
-        public string? PaymentTransactionId { get; set; } // Store ID from payment gateway
+        public string? PaymentTransactionId { get; set; }
 
         [Column(TypeName = "decimal(18, 2)")]
         [Display(Name = "Amount Paid")]
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
-        public decimal? AmountPaid { get; set; } // Amount confirmed by payment gateway
-
-        // You might add other fields like special requests, travel dates if customizable, etc.
+        public decimal? AmountPaid { get; set; }
 
         [Timestamp]
         public byte[]? RowVersion { get; set; }
     }
 }
-

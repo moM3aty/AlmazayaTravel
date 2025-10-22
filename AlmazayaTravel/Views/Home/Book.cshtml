@@ -2,33 +2,24 @@
 @{
     ViewData["Title"] = "Book Package";
     var packageName = Model?.TripPackage?.Name ?? "Selected Package";
-    // Determine language based on HTML attribute set by JS
     var currentLang = Context.Request.Headers["Accept-Language"].ToString().Split(',')[0].StartsWith("ar") ? "ar" : "en";
     packageName = currentLang == "ar" ? (Model?.TripPackage?.NameAr ?? packageName) : packageName;
 
     var packagePrice = Model?.TripPackage != null ? (Model.TripPackage.PriceAfterDiscount ?? Model.TripPackage.PriceBeforeDiscount) : 0;
-    var priceNote = currentLang == "ar" ? "(السعر النهائي قد يختلف...)" : "(Final price may vary...)"; // Example direct translation
+    var priceNote = currentLang == "ar" ? "(السعر النهائي يتم حسابه قبل الدفع.)" : "(Final price calculated before payment.)";
 }
 
 @section Styles {
     <style>
-        body {
-            padding-top: 100px; /* Adjust if needed */
-        }
-
-        .navbar {
-            min-height: 80px;
-        }
-
         .booking-card {
             background-color: #fff;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            overflow: hidden; /* Ensure header radius works */
+            overflow: hidden;
         }
 
             .booking-card .card-header {
-                background: linear-gradient(135deg, #4A90E2 0%, #3a7bc8 100%); /* Primary gradient */
+                background: linear-gradient(135deg, #4A90E2 0%, #3a7bc8 100%);
             }
 
         .form-label.fw-bold {
@@ -57,7 +48,7 @@
             font-size: 1.1rem;
             font-weight: 500;
         }
-        /* RTL Adjustments */
+
         body.rtl .booking-card .card-header h5 .me-2 {
             margin-left: 0.5rem !important;
             margin-right: 0 !important;
@@ -71,6 +62,12 @@
         body.rtl .btn .me-2 {
             margin-left: 0.5rem !important;
             margin-right: 0 !important;
+        }
+
+        body.rtl .breadcrumb-item + .breadcrumb-item::before {
+            float: right;
+            padding-left: 0.5rem;
+            padding-right: 0;
         }
 
     </style>
@@ -95,25 +92,20 @@
 
 <div class="container mb-5">
     <div class="row justify-content-center">
-        <!-- Center the column -->
         <div class="col-lg-8 col-md-10">
-            <!-- Adjust width as needed -->
             <div class="card booking-card">
                 <div class="card-header py-3 text-white">
                     <h5 class="mb-0 d-flex align-items-center"><i class="fas fa-user-edit me-2"></i><span data-key="EnterDetails" data-en="Enter Your Booking Details" data-ar="أدخل تفاصيل الحجز الخاصة بك">Enter Your Booking Details</span></h5>
                 </div>
                 <div class="card-body p-4 p-md-5">
-                    <!-- More padding on larger screens -->
                     <form asp-action="Book" method="post">
                         @Html.AntiForgeryToken()
-                        <!-- Display model errors -->
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger alert-sm p-2 mb-3" role="alert"></div>
 
                         <input type="hidden" asp-for="TripPackageId" />
 
                         <div class="row g-3 mb-3">
                             <div class="col-12">
-                                <!-- Full width name -->
                                 <label asp-for="ClientName" class="form-label fw-bold" data-key="FullName" data-en="Full Name" data-ar="الاسم الكامل"></label>
                                 <input asp-for="ClientName" class="form-control" />
                                 <span asp-validation-for="ClientName" class="text-danger small"></span>
@@ -141,9 +133,10 @@
                         </div>
 
                         <div class="alert alert-info mt-3" role="alert">
-                            <i class="fas fa-info-circle me-2"></i> <span data-key="PriceInfo" data-en="Approximate price based on package: " data-ar="السعر التقريبي بناءً على الباقة: ">Approximate price: </span> <span class="fw-bold">@packagePrice.ToString("C")</span>
+                            <i class="fas fa-info-circle me-2"></i> <span data-key="PriceInfo" data-en="Approximate price based on package: " data-ar="السعر التقريبي بناءً على الباقة: ">Approximate price: </span> <span class="fw-bold">@packagePrice.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ar-SA"))</span>
                             <small class="d-block" data-key="PriceNoteBooking" data-en="(Final price calculated before payment.)" data-ar="(يتم حساب السعر النهائي قبل الدفع.)">@priceNote</small>
                         </div>
+
 
                         <hr class="my-4">
 
@@ -152,7 +145,6 @@
                                 <i class="fas fa-arrow-left me-1"></i> <span data-key="BackToDetails" data-en="Back to Details" data-ar="العودة للتفاصيل">Back to Details</span>
                             </a>
                             <button type="submit" class="btn btn-success btn-lg rounded-pill px-5 shadow order-sm-2">
-                                <!-- Ensure button is type submit -->
                                 <i class="fas fa-credit-card me-2"></i> <span data-key="ProceedToPayment" data-en="Proceed to Payment" data-ar="المتابعة إلى الدفع">Proceed to Payment</span>
                             </button>
                         </div>
@@ -165,8 +157,6 @@
 
 @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        Html.RenderPartial("_ValidationScriptsPartial");
     }
-    <!-- Translation handled globally by index.js -->
 }
-

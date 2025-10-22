@@ -9,7 +9,6 @@
 
 <div class="row">
     <div class="col-md-10 mx-auto">
-        <!-- Wider column -->
         <div class="card shadow-sm rounded-3">
             <div class="card-body p-4">
                 <form asp-action="PackageCreate" method="post" enctype="multipart/form-data">
@@ -17,12 +16,10 @@
                     <div asp-validation-summary="ModelOnly" class="alert alert-danger alert-sm p-2" role="alert"></div>
 
                     <div class="row g-3">
-                        <!-- English Fields -->
                         <div class="col-md-6 border-end pe-md-4">
-                            <!-- Add border -->
                             <h5 class="mb-3 text-muted" data-key="EnglishSection" data-en="English Details" data-ar="التفاصيل الإنجليزية">English Details</h5>
                             <div class="mb-3">
-                                <label asp-for="Name" class="form-label fw-bold"></label> <!-- Label comes from Display attribute -->
+                                <label asp-for="Name" class="form-label fw-bold"></label>
                                 <input asp-for="Name" class="form-control" />
                                 <span asp-validation-for="Name" class="text-danger small"></span>
                             </div>
@@ -38,31 +35,27 @@
                             </div>
                         </div>
 
-                        <!-- Arabic Fields -->
                         <div class="col-md-6 ps-md-4">
-                            <!-- Add padding -->
                             <h5 class="mb-3 text-muted" data-key="ArabicSection" data-en="Arabic Details" data-ar="التفاصيل العربية">Arabic Details</h5>
                             <div class="mb-3">
                                 <label asp-for="NameAr" class="form-label fw-bold"></label>
-                                <input asp-for="NameAr" class="form-control" dir="rtl" /> <!-- Add dir="rtl" -->
+                                <input asp-for="NameAr" class="form-control" dir="rtl" />
                                 <span asp-validation-for="NameAr" class="text-danger small"></span>
                             </div>
                             <div class="mb-3">
                                 <label asp-for="DestinationCountryAr" class="form-label fw-bold"></label>
-                                <input asp-for="DestinationCountryAr" class="form-control" dir="rtl" /> <!-- Add dir="rtl" -->
+                                <input asp-for="DestinationCountryAr" class="form-control" dir="rtl" />
                                 <span asp-validation-for="DestinationCountryAr" class="text-danger small"></span>
                             </div>
                             <div class="mb-3">
                                 <label asp-for="DescriptionAr" class="form-label fw-bold"></label>
-                                <textarea asp-for="DescriptionAr" class="form-control" rows="5" dir="rtl"></textarea> <!-- Add dir="rtl" -->
+                                <textarea asp-for="DescriptionAr" class="form-control" rows="5" dir="rtl"></textarea>
                                 <span asp-validation-for="DescriptionAr" class="text-danger small"></span>
                             </div>
                         </div>
 
-                        <!-- Common Fields Separator -->
                         <div class="col-12"><hr class="my-3"></div>
 
-                        <!-- Common Fields Row -->
                         <div class="row g-3">
                             <div class="col-md-4">
                                 <label asp-for="DurationDays" class="form-label fw-bold"></label>
@@ -83,9 +76,7 @@
 
 
                         <div class="col-12 mt-3">
-                            <!-- Added margin top -->
                             <label asp-for="ImageFile" class="form-label fw-bold"></label>
-                            <!-- Image Preview Placeholder -->
                             <img id="imagePreview" src="#" alt="Image Preview" class="img-thumbnail admin-edit-img mb-2" style="display: none;" />
                             <input asp-for="ImageFile" type="file" class="form-control" accept="image/png, image/jpeg, image/gif" />
                             <span asp-validation-for="ImageFile" class="text-danger small"></span>
@@ -93,7 +84,6 @@
                         </div>
 
                         <div class="col-12 mt-3">
-                            <!-- Added margin top -->
                             <div class="form-check form-switch">
                                 <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" checked>
                                 <label asp-for="IsActive" class="form-check-label" data-key="IsActiveLabel" data-en="Make this package visible to customers" data-ar="جعل هذه الباقة مرئية للعملاء"></label>
@@ -122,7 +112,4 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <!-- Translation handled globally by admin-dashboard.js -->
-    <!-- Image preview script is now in admin-dashboard.js -->
 }
-

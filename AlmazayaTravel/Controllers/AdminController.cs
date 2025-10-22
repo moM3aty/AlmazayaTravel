@@ -26,7 +26,6 @@ namespace AlmazayaTravel.Controllers
             _logger = logger;
         }
 
-        // --- Authentication Actions (Remain the same) ---
         [AllowAnonymous]
         public IActionResult Login(string? returnUrl = null)
         {
@@ -41,7 +40,7 @@ namespace AlmazayaTravel.Controllers
         public async Task<IActionResult> Login(string username, string password, string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            // !!! Replace with secure authentication !!!
+
             if (username == "admin" && password == "password123")
             {
                 var claims = new List<Claim> { new Claim(ClaimTypes.Name, username), new Claim(ClaimTypes.Role, "Administrator"), };
@@ -66,27 +65,22 @@ namespace AlmazayaTravel.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // --- Trip Package Management (Updated Bind) ---
-
-        // GET: Admin/ or Admin/Index
         public async Task<IActionResult> Index()
         {
             _logger.LogInformation("Fetching trip packages for admin index.");
             var packages = await _context.TripPackages.OrderByDescending(p => p.Id).ToListAsync();
-            return View("PackagesIndex", packages); // Assumes view is still PackagesIndex.cshtml
+            return View("PackagesIndex", packages);
         }
 
-        // GET: Admin/PackageCreate
         public IActionResult PackageCreate()
         {
             return View();
         }
 
-        // POST: Admin/PackageCreate (Updated Bind)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PackageCreate(
-            [Bind("Name,Description,DestinationCountry,NameAr,DescriptionAr,DestinationCountryAr,DurationDays,PriceBeforeDiscount,PriceAfterDiscount,IsActive,ImageFile")] // Added Ar fields
+            [Bind("Name,Description,DestinationCountry,NameAr,DescriptionAr,DestinationCountryAr,DurationDays,PriceBeforeDiscount,PriceAfterDiscount,IsActive,ImageFile")]
             TripPackage tripPackage)
         {
             _logger.LogInformation("Attempting to create trip package: {PackageName}", tripPackage.Name);
@@ -119,7 +113,6 @@ namespace AlmazayaTravel.Controllers
             return View(tripPackage);
         }
 
-        // GET: Admin/PackageEdit/5
         public async Task<IActionResult> PackageEdit(int? id)
         {
             if (id == null) return NotFound();
@@ -128,11 +121,10 @@ namespace AlmazayaTravel.Controllers
             return View(tripPackage);
         }
 
-        // POST: Admin/PackageEdit/5 (Updated Bind)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PackageEdit(int id,
-             [Bind("Id,Name,Description,DestinationCountry,NameAr,DescriptionAr,DestinationCountryAr,DurationDays,PriceBeforeDiscount,PriceAfterDiscount,IsActive,ImageUrl,ImageFile,RowVersion")] // Added Ar fields
+             [Bind("Id,Name,Description,DestinationCountry,NameAr,DescriptionAr,DestinationCountryAr,DurationDays,PriceBeforeDiscount,PriceAfterDiscount,IsActive,ImageUrl,ImageFile,RowVersion")]
              TripPackage tripPackage)
         {
             _logger.LogInformation("Attempting to edit trip package ID: {PackageId}", id);
@@ -163,16 +155,14 @@ namespace AlmazayaTravel.Controllers
             }
             else
             {
-                // Ensure ImageUrl is preserved if no new file uploaded but model binding might clear it
                 packageToUpdate.ImageUrl = tripPackage.ImageUrl;
             }
 
-            // Update TryUpdateModelAsync to include Ar fields
             if (await TryUpdateModelAsync<TripPackage>(packageToUpdate, "",
                 p => p.Name, p => p.Description, p => p.DestinationCountry,
-                p => p.NameAr, p => p.DescriptionAr, p => p.DestinationCountryAr, // Added Ar fields
+                p => p.NameAr, p => p.DescriptionAr, p => p.DestinationCountryAr,
                 p => p.DurationDays, p => p.PriceBeforeDiscount, p => p.PriceAfterDiscount,
-                p => p.IsActive, p => p.ImageUrl)) // ImageUrl updated separately above
+                p => p.IsActive, p => p.ImageUrl))
             {
                 try
                 {
@@ -206,20 +196,15 @@ namespace AlmazayaTravel.Controllers
             {
                 _logger.LogWarning("Model state invalid during package edit for ID {PackageId}.", id);
                 if (tripPackage.ImageFile == null)
-                    // Re-assign ImageUrl in case TryUpdateModelAsync failed AFTER we potentially set it
                     packageToUpdate.ImageUrl = tripPackage.ImageUrl;
-                // Return the view with the model containing validation errors
-                return View(tripPackage); // Important: return the model passed in, which has errors
+
+                return View(tripPackage);
             }
-            // If TryUpdateModelAsync failed, need to return view with the original entity + errors
-            // Restore ImageUrl in case TryUpdateModel cleared it and no new image was uploaded
+
             if (tripPackage.ImageFile == null) tripPackage.ImageUrl = packageToUpdate.ImageUrl;
-            return View(tripPackage); // Return the model that failed validation
+            return View(tripPackage);
         }
 
-
-        // --- Delete Actions (Remain the same logic) ---
-        // GET: Admin/PackageDelete/5
         public async Task<IActionResult> PackageDelete(int? id, bool? concurrencyError)
         {
             if (id == null) return NotFound();
@@ -230,10 +215,9 @@ namespace AlmazayaTravel.Controllers
                 return NotFound();
             }
             if (concurrencyError.GetValueOrDefault()) { ViewData["ConcurrencyErrorMessage"] = "Record modified..."; }
-            return View(tripPackage); // Requires PackageDelete.cshtml view
+            return View(tripPackage);
         }
 
-        // POST: Admin/PackageDeleteConfirmed/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PackageDeleteConfirmed(int id)
@@ -274,8 +258,6 @@ namespace AlmazayaTravel.Controllers
             }
         }
 
-
-        // --- View Customer Bookings Actions (Remain the same) ---
         public async Task<IActionResult> BookingsIndex()
         {
             _logger.LogInformation("Fetching customer bookings for admin.");
@@ -287,11 +269,9 @@ namespace AlmazayaTravel.Controllers
             if (id == null) return NotFound();
             var booking = await _context.Bookings.Include(b => b.TripPackage).FirstOrDefaultAsync(m => m.Id == id);
             if (booking == null) return NotFound();
-            return View(booking); // Requires BookingDetails.cshtml view
+            return View(booking);
         }
 
-
-        // --- Helper Methods (Remain the same) ---
         private async Task<string?> UploadPackageImage(IFormFile imageFile)
         {
             if (imageFile == null || imageFile.Length == 0) return null;
@@ -329,4 +309,3 @@ namespace AlmazayaTravel.Controllers
         private bool TripPackageExists(int id) => _context.TripPackages.Any(e => e.Id == id);
     }
 }
-

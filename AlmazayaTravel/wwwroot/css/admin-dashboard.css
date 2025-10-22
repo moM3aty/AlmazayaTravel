@@ -1,23 +1,20 @@
-﻿/* --- Enhanced Admin Dashboard Styles --- */
-
-/* Base Styles & Theme */
-:root {
-    --admin-primary: #4A90E2; /* Slightly softer blue */
-    --admin-secondary: #50E3C2; /* Teal accent */
-    --admin-success: #7ED321; /* Vibrant green */
-    --admin-danger: #D0021B; /* Strong red */
-    --admin-warning: #F5A623; /* Orange */
-    --admin-info: #4A90E2; /* Same as primary for info */
+﻿:root {
+    --admin-primary: #4A90E2;
+    --admin-secondary: #50E3C2;
+    --admin-success: #7ED321;
+    --admin-danger: #D0021B;
+    --admin-warning: #F5A623;
+    --admin-info: #4A90E2;
     --admin-light: #f8f9fa;
-    --admin-dark: #2c3e50; /* Dark blue-grey */
-    --admin-text: #34495e; /* Dark grey text */
-    --admin-muted: #95a5a6; /* Lighter grey */
-    --admin-bg: #eef2f7; /* Very light cool grey background */
+    --admin-dark: #2c3e50;
+    --admin-text: #34495e;
+    --admin-muted: #95a5a6;
+    --admin-bg: #eef2f7;
     --admin-card-bg: #ffffff;
     --admin-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
     --admin-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     --admin-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
-    --admin-radius: 8px; /* Consistent border radius */
+    --admin-radius: 8px;
     --admin-transition: all 0.25s ease-in-out;
 }
 
@@ -30,14 +27,13 @@ body[data-bs-theme="light"] {
 
 h1, h2, h3, h4, h5, h6 {
     color: var(--admin-dark);
-    font-weight: 600; /* Slightly bolder headings */
+    font-weight: 600;
 }
 
-/* Navbar */
 .admin-navbar {
     background-color: var(--admin-dark) !important;
     box-shadow: var(--admin-shadow);
-    border-bottom: none; /* Remove previous border */
+    border-bottom: none;
     transition: var(--admin-transition);
 }
 
@@ -47,9 +43,9 @@ h1, h2, h3, h4, h5, h6 {
     }
 
 .admin-logo-img {
-    height: 35px; /* Adjust size */
+    height: 35px;
     width: auto;
-    filter: brightness(1.1); /* Slightly brighten logo */
+    filter: brightness(1.1);
     transition: transform 0.3s ease;
 }
 
@@ -65,14 +61,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
     .admin-navbar .nav-link:hover,
-    .admin-navbar .nav-link.active { /* Add active state if needed later */
+    .admin-navbar .nav-link.active {
         background-color: rgba(255, 255, 255, 0.1);
         color: #fff !important;
     }
-.navbar-nav{
-    align-items:center; 
+
+.navbar-nav {
+    align-items: center;
 }
-/* Logout Button */
+
 .admin-navbar #logoutForm button {
     background-color: transparent;
     border: 1px solid var(--admin-danger);
@@ -88,7 +85,6 @@ h1, h2, h3, h4, h5, h6 {
         box-shadow: 0 2px 5px rgba(208, 2, 27, 0.3);
     }
 
-/* Language Dropdown */
 .admin-navbar .dropdown-menu {
     border-radius: var(--admin-radius);
     box-shadow: var(--admin-shadow);
@@ -104,9 +100,8 @@ h1, h2, h3, h4, h5, h6 {
         color: white;
     }
 
-/* Main Content Area */
 .admin-container {
-    padding-top: 2rem; /* Add space below navbar */
+    padding-top: 2rem;
     padding-bottom: 2rem;
 }
 
@@ -116,10 +111,9 @@ h1, h2, h3, h4, h5, h6 {
         font-weight: 700;
     }
 
-/* Button Styles - Enhanced */
 .btn {
-    border-radius: 50px; /* Pill shape */
-    padding: 0.6rem 1.5rem; /* Adjust padding */
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem;
     font-weight: 500;
     letter-spacing: 0.3px;
     border-width: 1px;
@@ -236,34 +230,32 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 50px !important;
     margin: 0 2px;
 }
-/* Ensure grouped buttons remain rounded */
 
-/* Table Styles - Enhanced */
 .table-responsive {
     border-radius: var(--admin-radius);
     box-shadow: var(--admin-shadow);
-    background-color: var(--admin-card-bg); /* Add bg to container */
-    overflow: hidden; /* Needed for border radius */
+    background-color: var(--admin-card-bg);
+    overflow: hidden;
     margin-top: 1.5rem;
 }
 
 .admin-table {
-    margin-bottom: 0; /* Remove default margin */
+    margin-bottom: 0;
 }
 
     .admin-table thead th {
-        background-color: var(--admin-dark); /* Use dark variable */
+        background-color: var(--admin-dark);
         color: white;
-        font-weight: 500; /* Slightly lighter weight */
-        border: none; /* Remove default borders */
-        padding: 1rem; /* More padding */
+        font-weight: 500;
+        border: none;
+        padding: 1rem;
         white-space: nowrap;
         vertical-align: middle;
     }
 
     .admin-table tbody tr {
         transition: var(--admin-transition);
-        border-bottom: 1px solid #eee; /* Lighter row separator */
+        border-bottom: 1px solid #eee;
     }
 
         .admin-table tbody tr:last-child {
@@ -271,31 +263,31 @@ h1, h2, h3, h4, h5, h6 {
         }
 
         .admin-table tbody tr:hover {
-            background-color: rgba(74, 144, 226, 0.05); /* Subtle primary hover */
-            transform: scale(1.01); /* Slight scale effect */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Add shadow on hover */
-            position: relative; /* Needed for z-index */
+            background-color: rgba(74, 144, 226, 0.05);
+            transform: scale(1.01);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            position: relative;
             z-index: 1;
         }
 
     .admin-table td {
-        padding: 0.9rem 1rem; /* Consistent padding */
+        padding: 0.9rem 1rem;
         vertical-align: middle;
-        border: none; /* Remove default borders */
+        border: none;
         color: var(--admin-text);
     }
 
 .admin-table-img {
     height: 45px;
-    width: 60px; /* Adjust aspect ratio */
+    width: 60px;
     object-fit: cover;
-    border-radius: 4px; /* Slightly rounded */
+    border-radius: 4px;
     box-shadow: var(--admin-shadow-sm);
     transition: transform 0.2s ease;
 }
 
 .admin-table tbody tr:hover .admin-table-img {
-    transform: scale(1.5); /* Enlarge image on row hover */
+    transform: scale(1.5);
 }
 
 .badge {
@@ -304,14 +296,13 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
 }
 
-/* Forms (Create/Edit) - Enhanced */
 .card {
     border: none;
     border-radius: var(--admin-radius);
     box-shadow: var(--admin-shadow);
     background-color: var(--admin-card-bg);
     margin-top: 1rem;
-    overflow: hidden; /* Prevent shadow clipping */
+    overflow: hidden;
     transition: var(--admin-transition);
 }
 
@@ -320,7 +311,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
 .card-header {
-    background-color: var(--admin-light); /* Light header */
+    background-color: var(--admin-light);
     border-bottom: 1px solid #eee;
 }
 
@@ -338,20 +329,20 @@ h1, h2, h3, h4, h5, h6 {
 
 .form-control, .form-select {
     border-radius: var(--admin-radius);
-    border: 1px solid #dce4ec; /* Lighter border */
+    border: 1px solid #dce4ec;
     padding: 0.7rem 1rem;
     transition: var(--admin-transition);
-    background-color: #fdfdfe; /* Slightly off-white */
+    background-color: #fdfdfe;
 }
 
     .form-control:focus, .form-select:focus {
         border-color: var(--admin-primary);
-        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15); /* Softer focus ring */
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
         background-color: #fff;
     }
 
     .form-control::placeholder {
-        color: #b0bec5; /* Lighter placeholder */
+        color: #b0bec5;
         opacity: 1;
     }
 
@@ -375,7 +366,6 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: var(--admin-radius);
 }
 
-/* Modal Enhancements */
 .modal-content {
     border: none;
     border-radius: var(--admin-radius);
@@ -402,12 +392,20 @@ h1, h2, h3, h4, h5, h6 {
 .modal-footer {
     border-top: 1px solid #eee;
     padding: 1rem 1.5rem;
-    background-color: #f9fafb; /* Slightly different footer bg */
+    background-color: #f9fafb;
     border-bottom-left-radius: var(--admin-radius);
     border-bottom-right-radius: var(--admin-radius);
 }
 
-/* Alert Enhancements */
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+
+.modal {
+    z-index: 1050 !important;
+    overflow-y: auto;
+}
+
 .alert {
     border-radius: var(--admin-radius);
     border: none;
@@ -416,7 +414,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     box-shadow: var(--admin-shadow-sm);
-    animation: fadeIn 0.5s ease; /* Fade-in animation */
+    animation: fadeIn 0.5s ease;
 }
 
     .alert .fas, .alert .fa-solid {
@@ -462,13 +460,12 @@ body.rtl .alert .fas, body.rtl .alert .fa-solid {
         transform: scale(1.1);
     }
 
-/* Login Page Styles */
 .login-container {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--admin-dark) 0%, #34495e 100%); /* Gradient background */
+    background: linear-gradient(135deg, var(--admin-dark) 0%, #34495e 100%);
 }
 
 .login-card {
@@ -478,7 +475,7 @@ body.rtl .alert .fas, body.rtl .alert .fa-solid {
     border-radius: var(--admin-radius);
     box-shadow: var(--admin-shadow-lg);
     overflow: hidden;
-    animation: slideInUp 0.6s ease-out; /* Slide-in animation */
+    animation: slideInUp 0.6s ease-out;
 }
 
 .login-header {
@@ -490,7 +487,7 @@ body.rtl .alert .fas, body.rtl .alert .fa-solid {
     .login-header .logo-img {
         height: 60px;
         margin-bottom: 1rem;
-        filter: brightness(0) invert(1); /* Make logo white */
+        filter: brightness(0) invert(1);
     }
 
     .login-header h2 {
@@ -512,7 +509,6 @@ body.rtl .alert .fas, body.rtl .alert .fa-solid {
         font-weight: 600;
     }
 
-/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -537,12 +533,11 @@ body.rtl .alert .fas, body.rtl .alert .fa-solid {
     }
 }
 
-/* Add entry animation to table rows */
 .admin-table tbody tr {
     animation: fadeIn 0.5s ease forwards;
     opacity: 0;
 }
-    /* Stagger animation delay for table rows */
+
     .admin-table tbody tr:nth-child(1) {
         animation-delay: 0.1s;
     }
@@ -562,20 +557,18 @@ body.rtl .alert .fas, body.rtl .alert .fa-solid {
     .admin-table tbody tr:nth-child(5) {
         animation-delay: 0.3s;
     }
-/* Add more if needed */
 
-/* RTL Adjustments */
 body.rtl {
-    font-family: 'Cairo', sans-serif; /* Use Cairo for RTL */
+    font-family: 'Cairo', sans-serif;
 }
 
     body.rtl .form-check {
-        padding-right: 1.5em; /* Adjust check alignment */
+        padding-right: 1.5em;
         padding-left: 0;
     }
 
         body.rtl .form-check .form-check-input {
-            margin-right: -1.5em; /* Adjust check position */
+            margin-right: -1.5em;
             margin-left: 0;
         }
 
@@ -611,5 +604,3 @@ body.rtl {
         right: 0;
         left: auto;
     }
-/* Add more specific RTL adjustments as needed */
-

@@ -1,13 +1,16 @@
 ﻿@model AlmazayaTravel.Models.TripPackage
 @{
     ViewData["Title"] = Model?.Name ?? "Package Details";
-    // Layout is set in _ViewStart.cshtml
     var priceDisplay = Model != null ? (Model.PriceAfterDiscount ?? Model.PriceBeforeDiscount) : 0;
+    var currentLang = Context.Request.Headers["Accept-Language"].ToString().Split(',')[0].StartsWith("ar") ? "ar" : "en";
+    var packageName = currentLang == "ar" ? Model?.NameAr : Model?.Name;
+    var packageDest = currentLang == "ar" ? Model?.DestinationCountryAr : Model?.DestinationCountry;
+    var packageDesc = currentLang == "ar" ? Model?.DescriptionAr : Model?.Description;
 }
 
 @if (Model == null)
 {
-    <div class="container section-padding text-center">
+    <div class="container section-padding text-center" style="margin-top: 100px;">
         <h2 data-key="PackageNotFound" data-en="Package Not Found" data-ar="الباقة غير موجودة">Package Not Found</h2>
         <p class="text-muted" data-key="PackageNotFoundMsg" data-en="The requested package could not be found or is no longer available." data-ar="تعذر العثور على الباقة المطلوبة أو أنها لم تعد متوفرة.">The requested package could not be found...</p>
         <a asp-action="Index" class="btn btn-primary rounded-pill mt-3">
@@ -17,27 +20,25 @@
 }
 else
 {
-    <!-- Optional: Simple Header -->
-    <header class="page-header-simple bg-light py-5 mb-5">
+    <header class="page-header-simple bg-light py-4 mb-4" style="margin-top: 100px;">
         <div class="container">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a asp-action="Index">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+                <ol class="breadcrumb bg-transparent p-0 m-0">
+                    <li class="breadcrumb-item"><a asp-action="Index" data-key="breadcrumbHome" data-en="Home" data-ar="الرئيسية">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" data-key="packageName_@Model.Id" data-en="@Model.Name" data-ar="@Model.NameAr">@packageName</li>
                 </ol>
             </nav>
-            <h1 class="display-5 fw-bold">@Model.Name</h1>
-            <p class="lead text-muted">@Model.DestinationCountry - @Model.DurationDays <span data-key="days" data-en="Days" data-ar="أيام">Days</span></p>
+            <h1 class="mt-2" data-key="packageName_@Model.Id" data-en="@Model.Name" data-ar="@Model.NameAr">@packageName</h1>
+            <p class="lead text-muted" data-key="packageDest_@Model.Id" data-en="@Model.DestinationCountry" data-ar="@Model.DestinationCountryAr">@packageDest - @Model.DurationDays <span data-key="days" data-en="Days" data-ar="أيام">Days</span></p>
         </div>
     </header>
 
     <div class="container mb-5">
         <div class="row g-4 g-lg-5">
-            <!-- Image Column -->
             <div class="col-lg-7">
                 @if (!string.IsNullOrEmpty(Model.ImageUrl))
                 {
-                    <img src="@Url.Content("~" + Model.ImageUrl)" class="img-fluid rounded-3 shadow mb-4" alt="@Model.Name" onerror="this.onerror=null; this.src='https://placehold.co/800x600/cccccc/ffffff?text=Package+Image';">
+                    <img src="@Url.Content("~" + Model.ImageUrl)" class="img-fluid rounded-3 shadow mb-4" alt="@packageName" onerror="this.onerror=null; this.src='https://placehold.co/800x600/cccccc/ffffff?text=Package+Image';">
                 }
                 else
                 {
@@ -45,41 +46,35 @@ else
                 }
                 <h3 data-key="DescriptionTitle" data-en="Package Description" data-ar="وصف الباقة">Package Description</h3>
                 <hr>
-                <div class="package-description">
-                    @Html.Raw(Model.Description?.Replace("\n", "<br />")) <!-- Display description with line breaks -->
+                <div class="package-description" data-key="packageDesc_@Model.Id" data-en="@Model.Description" data-ar="@Model.DescriptionAr">
+                    @Html.Raw(packageDesc?.Replace("\n", "<br />"))
                 </div>
             </div>
 
-            <!-- Booking/Details Column -->
             <div class="col-lg-5">
                 <div class="card shadow border-0 rounded-3 sticky-top" style="top: 120px;">
-                    <!-- Adjust top offset if needed -->
                     <div class="card-body p-4">
                         <h4 class="card-title mb-3" data-key="BookingSummary" data-en="Booking Summary" data-ar="ملخص الحجز">Booking Summary</h4>
 
-                        <!-- Price Display -->
                         <div class="price-info mb-4 text-center bg-light p-3 rounded-2">
                             @if (Model.PriceAfterDiscount.HasValue && Model.PriceAfterDiscount < Model.PriceBeforeDiscount)
                             {
-                                <span class="text-muted text-decoration-line-through me-2 fs-5">@Model.PriceBeforeDiscount.ToString("C")</span>
-                                <span class="fw-bold fs-2 text-success">@Model.PriceAfterDiscount.Value.ToString("C")</span>
+                                <span class="text-muted text-decoration-line-through me-2 fs-5">@Model.PriceBeforeDiscount.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ar-SA"))</span>
+                                <span class="fw-bold fs-2 text-success">@Model.PriceAfterDiscount.Value.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ar-SA"))</span>
                                 <span class="badge bg-danger ms-2" data-key="discount" data-en="Discount!" data-ar="خصم!">Discount!</span>
                             }
                             else
                             {
-                                <span class="fw-bold fs-2 text-primary">@Model.PriceBeforeDiscount.ToString("C")</span>
+                                <span class="fw-bold fs-2 text-primary">@Model.PriceBeforeDiscount.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ar-SA"))</span>
                             }
                             <small class="text-muted d-block mt-1" data-key="priceNoteApprox" data-en="Approximate price per person/package (check booking form)" data-ar="السعر التقريبي للشخص/للباقة (تحقق من نموذج الحجز)"></small>
                         </div>
 
-                        <!-- Key Details -->
                         <ul class="list-unstyled mb-4">
-                            <li class="mb-2"><i class="fas fa-map-marker-alt fa-fw text-primary me-2"></i> <strong data-key="Destination" data-en="Destination" data-ar="الوجهة">Destination:</strong> @Model.DestinationCountry</li>
+                            <li class="mb-2"><i class="fas fa-map-marker-alt fa-fw text-primary me-2"></i> <strong data-key="Destination" data-en="Destination" data-ar="الوجهة">Destination:</strong> <span data-key="packageDest_@Model.Id" data-en="@Model.DestinationCountry" data-ar="@Model.DestinationCountryAr">@packageDest</span></li>
                             <li class="mb-2"><i class="fas fa-clock fa-fw text-primary me-2"></i> <strong data-key="Duration" data-en="Duration" data-ar="المدة">Duration:</strong> @Model.DurationDays <span data-key="days" data-en="Days" data-ar="أيام">Days</span></li>
-                            <!-- Add more key details if available in the model -->
                         </ul>
 
-                        <!-- Book Now Button -->
                         <div class="d-grid">
                             <a asp-action="Book" asp-route-id="@Model.Id" class="btn btn-success btn-lg rounded-pill shadow">
                                 <i class="fas fa-calendar-check me-2"></i><span data-key="BookNowBtn" data-en="Book This Package Now" data-ar="احجز هذه الباقة الآن">Book This Package Now</span>
@@ -88,7 +83,6 @@ else
 
                         <hr class="my-4">
 
-                        <!-- Contact Info (Optional) -->
                         <div class="text-center text-muted small">
                             <p class="mb-1" data-key="Questions?" data-en="Have questions?" data-ar="لديك أسئلة؟">Have questions?</p>
                             <a href="@Url.Action("Index", "Home", null, Context.Request.Scheme)#contact" data-key="ContactUsLink" data-en="Contact Us" data-ar="اتصل بنا">Contact Us</a>
@@ -114,9 +108,14 @@ else
             border-bottom: 1px solid #dee2e6;
         }
 
+        body.rtl .page-header-simple .breadcrumb-item + .breadcrumb-item::before {
+            float: right;
+            padding-left: 0.5rem;
+            padding-right: 0;
+        }
+
     </style>
 }
 
 @section Scripts {
-    <!-- Translation handled globally by index.js -->
 }

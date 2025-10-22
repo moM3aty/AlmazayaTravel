@@ -45,10 +45,7 @@
       تأكد من وجود مجلد wwwroot (للملفات الثابتة مثل CSS, JS, Images)
       وأن محتوياته يتم تضمينها عند النشر. هذا الإعداد الافتراضي غالباً ما يكون موجوداً.
     -->
-		<Folder Include="wwwroot\css\" />
 		<Folder Include="wwwroot\images\" />
-		<Folder Include="wwwroot\js\" />
-		<Folder Include="wwwroot\lib\" />
 	</ItemGroup>
 
 </Project>

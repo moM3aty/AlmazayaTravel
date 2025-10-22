@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http; // Added for IFormFile
+using System.Collections.Generic; // Added for ICollection
 
 namespace AlmazayaTravel.Models
 {
@@ -8,7 +10,6 @@ namespace AlmazayaTravel.Models
         [Key]
         public int Id { get; set; }
 
-        // --- English Fields ---
         [Required(ErrorMessage = "English package name is required.")]
         [StringLength(100)]
         [Display(Name = "Package Name (English)")]
@@ -24,9 +25,8 @@ namespace AlmazayaTravel.Models
         [Display(Name = "Destination Country (English)")]
         public string DestinationCountry { get; set; } = string.Empty;
 
-        // --- Arabic Fields ---
         [Required(ErrorMessage = "Arabic package name is required.")]
-        [StringLength(150)] // Allow potentially longer names in Arabic
+        [StringLength(150)]
         [Display(Name = "اسم الباقة (عربي)")]
         public string NameAr { get; set; } = string.Empty;
 
@@ -36,11 +36,10 @@ namespace AlmazayaTravel.Models
         public string DescriptionAr { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Arabic destination country is required.")]
-        [StringLength(70)] // Allow potentially longer names in Arabic
+        [StringLength(70)]
         [Display(Name = "بلد الوجهة (عربي)")]
         public string DestinationCountryAr { get; set; } = string.Empty;
 
-        // --- Common Fields ---
         [Required(ErrorMessage = "Duration in days is required.")]
         [Range(1, 90)]
         [Display(Name = "Duration (Days)")]
@@ -70,11 +69,9 @@ namespace AlmazayaTravel.Models
         [Display(Name = "Is Active?")]
         public bool IsActive { get; set; } = true;
 
-        // --- Navigation Property ---
         public virtual ICollection<Booking>? Bookings { get; set; }
 
         [Timestamp]
         public byte[]? RowVersion { get; set; }
     }
 }
-

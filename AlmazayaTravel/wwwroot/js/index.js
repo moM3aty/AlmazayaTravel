@@ -1,39 +1,34 @@
-﻿// --- Navbar Scroll Handling ---
-function handleNavbarScroll() {
+﻿function handleNavbarScroll() {
     const navbar = document.getElementById("main-nav");
-    const scrollIndicator = document.querySelector(".scroll-indicator"); // Get progress bar
+    const scrollIndicator = document.querySelector(".scroll-indicator");
 
     if (window.scrollY > 50) {
         navbar.classList.add("scrolled");
     } else {
         navbar.classList.remove("scrolled");
     }
-    updateScrollProgress(); // Update progress bar on scroll
+    updateScrollProgress();
 }
 
 window.addEventListener("scroll", handleNavbarScroll);
 
-// --- Translation Handling ---
 document.addEventListener("DOMContentLoaded", function () {
     const translateBtn = document.getElementById("translateBtn");
     const translateBtnText = translateBtn ? translateBtn.querySelector("span") : null;
-    let currentLang = localStorage.getItem("language") || "en"; // Default to English
+    let currentLang = localStorage.getItem("language") || "en";
 
-    // Set initial language state
     localStorage.setItem("language", currentLang);
     applyTranslation(currentLang);
-    // Initialize Swiper after initial translation
     initSwiper(currentLang);
 
-    // Apply necessary classes/attributes on load
-    handleNavbarScroll(); // Set initial navbar state
-    createScrollProgress(); // Create the scroll indicator
-    updateScrollProgress(); // Set initial progress
-    animateCounters(); // Initialize counters animation
-    AOS.init({ // Initialize AOS animations
-        duration: 800, // Slightly faster duration
-        once: true, // Animate elements only once
-        offset: 50, // Trigger animation a bit earlier
+    handleNavbarScroll();
+    createScrollProgress();
+    updateScrollProgress();
+    animateCounters();
+    AOS.init({
+        duration: 800,
+        once: true,
+        offset: 50,
     });
 
 
@@ -43,13 +38,11 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.setItem("language", currentLang);
             applyTranslation(currentLang);
 
-            // --- Close Navbar on Language Change (Mobile) ---
             const navbarCollapse = document.querySelector(".navbar-collapse");
             const isNavbarCollapsed = navbarCollapse && navbarCollapse.classList.contains("show");
             if (isNavbarCollapsed) {
                 new bootstrap.Collapse(navbarCollapse).hide();
             }
-            // Ensure navbar stays visually scrolled after language change if page isn't at top
             if (window.scrollY > 50) {
                 const navbar = document.getElementById("main-nav");
                 if (navbar) navbar.classList.add("scrolled");
@@ -60,39 +53,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function applyTranslation(lang) {
-    // Update text content based on data attributes
     document.querySelectorAll("[data-en][data-ar]").forEach(el => {
         let textValue = el.dataset[lang];
         if (textValue !== undefined) {
             if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
                 el.placeholder = textValue;
             } else if (el.tagName === "OPTION" && el.value === "") {
-                // Handle placeholder options in select dropdowns
                 el.textContent = textValue;
             } else if (el.tagName === "BUTTON" && el.querySelector('span')) {
-                // Handle buttons with icons and text spans (like translate button)
                 const span = el.querySelector('span');
                 if (span && span.dataset[lang] !== undefined) {
                     span.textContent = span.dataset[lang];
                 } else {
-                    // Fallback if only button has data attrs
-                    el.textContent = textValue; // This might remove the icon, adjust if needed
+                    el.textContent = textValue;
                 }
             }
             else {
-                // Direct text replacement for most elements (p, h1-h6, a, span, etc.)
-                // Avoid replacing content if it includes child elements (like icons within buttons/headings)
                 let hasChildElements = el.children.length > 0;
-                let onlyTextNodes = Array.from(el.childNodes).every(node => node.nodeType === Node.TEXT_NODE || (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'SPAN' && node.classList.contains('me-2'))); // Allow specific spans like in translate btn
+                let onlyTextNodes = Array.from(el.childNodes).every(node => node.nodeType === Node.TEXT_NODE || (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'SPAN' && node.classList.contains('me-2')));
 
-                if (!hasChildElements || onlyTextNodes || el.classList.contains('counter-label')) { // Allow direct replace for simple cases or specific classes
+                if (!hasChildElements || onlyTextNodes || el.classList.contains('counter-label')) {
                     el.textContent = textValue;
                 } else {
-                    // Attempt to replace only the main text node if complex element
                     for (let i = 0; i < el.childNodes.length; i++) {
                         if (el.childNodes[i].nodeType === Node.TEXT_NODE && el.childNodes[i].textContent.trim()) {
                             el.childNodes[i].textContent = textValue;
-                            break; // Assume first text node is the target
+                            break;
                         }
                     }
                 }
@@ -101,30 +87,24 @@ function applyTranslation(lang) {
         }
     });
 
-    // Update HTML lang and dir attributes
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
     document.body.classList.toggle("rtl", lang === "ar");
 
-    // Re-initialize Swiper for the new direction
     initSwiper(lang);
 
-    // Update error messages if present
     document.querySelectorAll(".error-msg").forEach(el => {
         if (el.dataset[lang]) {
             el.textContent = el.dataset[lang];
         }
     });
 
-    // Re-run AOS refresh might be needed if layout shifts significantly
     if (typeof AOS !== 'undefined') {
         AOS.refresh();
     }
 }
 
-// --- Scroll Progress Indicator ---
 function createScrollProgress() {
-    // Check if it already exists
     if (!document.querySelector(".scroll-indicator")) {
         const progressBar = document.createElement("div");
         progressBar.className = "scroll-indicator";
@@ -137,28 +117,25 @@ function updateScrollProgress() {
     if (progressBar) {
         const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
         const currentScroll = window.scrollY;
-        const scrollPercentage = totalScroll > 0 ? (currentScroll / totalScroll) : 0; // Avoid division by zero
+        const scrollPercentage = totalScroll > 0 ? (currentScroll / totalScroll) : 0;
         progressBar.style.transform = `scaleX(${scrollPercentage})`;
     }
 }
 
-// --- Counter Animation ---
 function animateCounters() {
     const counters = document.querySelectorAll(".counter");
-    if (counters.length === 0) return; // Exit if no counters
+    if (counters.length === 0) return;
 
-    const observer = new IntersectionObserver((entries, observer) => { // Add observer to arguments
+    const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const counter = entry.target;
                 const target = parseInt(counter.getAttribute("data-target"), 10);
                 let current = 0;
-                // Calculate increment dynamically for smoother animation over ~1 second
-                const duration = 1000; // ms
-                const stepTime = 20; // ms per step
+                const duration = 1000;
+                const stepTime = 20;
                 const totalSteps = duration / stepTime;
                 const increment = target / totalSteps;
-
 
                 const updateCounter = () => {
                     current += increment;
@@ -166,21 +143,19 @@ function animateCounters() {
                         counter.textContent = Math.ceil(current);
                         setTimeout(updateCounter, stepTime);
                     } else {
-                        counter.textContent = target; // Ensure final value is exact
+                        counter.textContent = target;
                     }
                 };
 
                 updateCounter();
-                observer.unobserve(counter); // Stop observing once animated
+                observer.unobserve(counter);
             }
         });
-    }, { threshold: 0.5 }); // Trigger when 50% visible
+    }, { threshold: 0.5 });
 
     counters.forEach(counter => observer.observe(counter));
 }
 
-
-// --- Contact Form Handling (WhatsApp Integration) ---
 document.getElementById("contactForm")?.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -188,11 +163,9 @@ document.getElementById("contactForm")?.addEventListener("submit", function (e) 
     let isValid = true;
     let errors = {};
 
-    // --- Clear previous errors ---
     form.querySelectorAll(".error-msg").forEach(el => el.remove());
     form.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
 
-    // --- Get form values ---
     const firstName = form.firstName.value.trim();
     const lastName = form.lastName.value.trim();
     const email = form.email.value.trim();
@@ -202,12 +175,10 @@ document.getElementById("contactForm")?.addEventListener("submit", function (e) 
     const travelers = form.travelers.value.trim();
     const message = form.message.value.trim();
 
-    // --- Basic Validation Rules ---
-    const nameRegex = /^[A-Za-z\u0600-\u06FF\s.'-]+$/; // Allow more characters in names
+    const nameRegex = /^[A-Za-z\u0600-\u06FF\s.'-]+$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^\+?\d{7,15}$/; // Allow '+' and range of digits
+    const phoneRegex = /^\+?\d{7,15}$/;
 
-    // --- Validation Checks ---
     if (!firstName) {
         errors.firstName = { en: "First name is required", ar: "الاسم الأول مطلوب" };
         isValid = false;
@@ -249,10 +220,9 @@ document.getElementById("contactForm")?.addEventListener("submit", function (e) 
         errors.travelDate = { en: "Please select a travel date", ar: "الرجاء اختيار تاريخ السفر" };
         isValid = false;
     } else {
-        // Optional: Check if date is in the past
         const today = new Date();
         const selectedDate = new Date(travelDate);
-        today.setHours(0, 0, 0, 0); // Reset time for comparison
+        today.setHours(0, 0, 0, 0);
         if (selectedDate < today) {
             errors.travelDate = { en: "Travel date cannot be in the past", ar: "لا يمكن أن يكون تاريخ السفر في الماضي" };
             isValid = false;
@@ -264,53 +234,44 @@ document.getElementById("contactForm")?.addEventListener("submit", function (e) 
         isValid = false;
     }
 
-    // --- Display errors ---
     const currentLang = localStorage.getItem("language") || "en";
     for (const key in errors) {
         const field = form.querySelector(`#${key}`);
         if (field) {
-            field.classList.add("is-invalid"); // Add Bootstrap invalid class
+            field.classList.add("is-invalid");
             const error = document.createElement("small");
             error.className = "error-msg text-danger d-block mt-1";
-            error.dataset.en = errors[key].en; // Store both translations
+            error.dataset.en = errors[key].en;
             error.dataset.ar = errors[key].ar;
-            error.textContent = errors[key][currentLang]; // Display current language error
-            // Insert after the input/select element
+            error.textContent = errors[key][currentLang];
             field.parentNode.insertBefore(error, field.nextSibling);
 
-            // Remove error on input/change
             field.addEventListener("input", handleFieldErrorClear, { once: true });
             field.addEventListener("change", handleFieldErrorClear, { once: true });
         }
     }
 
-    // --- Submit if valid ---
     if (isValid) {
         const text =
             `*New Travel Inquiry:*\n\n` +
             `*Name:* ${firstName} ${lastName}\n` +
             `*Email:* ${email}\n` +
             `*Phone:* ${phone}\n` +
-            `*Destination:* ${form.querySelector('#destination option:checked').textContent.replace('Choose Destination', '').replace('اختر الوجهة', '').trim()}\n` + // Get selected option text
+            `*Destination:* ${form.querySelector('#destination option:checked').textContent.replace('Choose Destination', '').replace('اختر الوجهة', '').trim()}\n` +
             `*Travel Date:* ${travelDate}\n` +
-            `*Travelers:* ${form.querySelector('#travelers option:checked').textContent.replace('Number of Travelers', '').replace('عدد المسافرين', '').trim()}\n` + // Get selected option text
-            (message ? `*Message:* ${message}\n` : ''); // Only include message if provided
+            `*Travelers:* ${form.querySelector('#travelers option:checked').textContent.replace('Number of Travelers', '').replace('عدد المسافرين', '').trim()}\n` +
+            (message ? `*Message:* ${message}\n` : '');
 
-        const whatsappNumber = "966567638260"; // Replace with your actual WhatsApp number
+        const whatsappNumber = "966567638260";
         const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
         window.open(url, "_blank");
 
-        // Optionally reset form and clear errors after successful "submission"
         form.reset();
         form.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
         form.querySelectorAll(".error-msg").forEach(el => el.remove());
-
-        // Optional: Show a success message (e.g., using a Bootstrap alert or a custom modal)
-        // alert("Your inquiry has been opened in WhatsApp!"); // Replace alert later
     }
 });
 
-// Helper function to remove validation error styling and message
 function handleFieldErrorClear(event) {
     const field = event.target;
     field.classList.remove("is-invalid");
@@ -320,12 +281,10 @@ function handleFieldErrorClear(event) {
     }
 }
 
-
-// --- Back to Top Button ---
 const backToTopBtn = document.getElementById("backToTop");
 if (backToTopBtn) {
     window.addEventListener("scroll", () => {
-        if (window.scrollY > 300) { // Show after scrolling down a bit more
+        if (window.scrollY > 300) {
             backToTopBtn.classList.add("show");
         } else {
             backToTopBtn.classList.remove("show");
@@ -337,93 +296,76 @@ if (backToTopBtn) {
     });
 }
 
-// --- Navbar Collapse Handling ---
 const navbar = document.getElementById("main-nav");
 const navbarToggler = document.querySelector(".navbar-toggler");
 const navbarCollapse = document.querySelector(".navbar-collapse");
 
-// Add scrolled class when toggler is clicked (for mobile background)
 if (navbarToggler && navbar) {
     navbarToggler.addEventListener("click", () => {
-        // Only add scrolled class if navbar isn't already scrolled and it's expanded
         if (!navbar.classList.contains('scrolled') && navbarCollapse && !navbarCollapse.classList.contains('show')) {
-            navbar.classList.add("scrolled"); // Add immediately for background
+            navbar.classList.add("scrolled");
         } else if (!navbar.classList.contains('scrolled') && navbarCollapse && navbarCollapse.classList.contains('show')) {
-            // If closing and not scrolled past threshold, remove scrolled class
             if (window.scrollY <= 50) {
-                setTimeout(() => { // Delay slightly to allow collapse animation
+                setTimeout(() => {
                     navbar.classList.remove("scrolled");
-                }, 350); // Adjust timeout based on collapse animation duration
+                }, 350);
             }
         }
     });
 }
 
-
-// Close navbar collapse when a nav link is clicked
 document.querySelectorAll(".nav-link").forEach(link => {
     link.addEventListener("click", () => {
         if (navbarCollapse && navbarCollapse.classList.contains("show")) {
             new bootstrap.Collapse(navbarCollapse).hide();
         }
-        // Keep navbar scrolled if page is not at top
         if (window.scrollY > 50 && navbar) {
             navbar.classList.add("scrolled");
         }
     });
 });
 
-
-// --- Swiper Initialization ---
-let swiperInstance; // Use a global variable to manage the instance
+let swiperInstance;
 
 function initSwiper(lang) {
     if (swiperInstance) {
-        swiperInstance.destroy(true, true); // Destroy previous instance if exists
+        swiperInstance.destroy(true, true);
     }
 
-    // Determine direction based on language
     const direction = lang === 'ar' ? 'rtl' : 'ltr';
 
     swiperInstance = new Swiper(".mySwiper", {
         loop: true,
         autoplay: {
-            delay: 3000, // Slightly longer delay
+            delay: 3000,
             disableOnInteraction: false,
         },
-        // Removed pagination option
         navigation: {
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev",
         },
-        slidesPerView: 1, // Default slides per view
-        spaceBetween: 15, // Default space
+        slidesPerView: 1,
+        spaceBetween: 15,
         breakpoints: {
-            // Small devices (landscape phones, 576px and up)
             576: {
                 slidesPerView: 2,
                 spaceBetween: 20
             },
-            // Medium devices (tablets, 768px and up)
             768: {
                 slidesPerView: 2,
                 spaceBetween: 25
             },
-            // Large devices (desktops, 992px and up)
             992: {
                 slidesPerView: 3,
                 spaceBetween: 30
             },
-            // Extra large devices (large desktops, 1200px and up)
             1200: {
-                slidesPerView: 3, // Keep 3 or increase if desired
+                slidesPerView: 3,
                 spaceBetween: 30
             }
         },
-        direction: 'horizontal', // Explicitly horizontal
-        // Key addition for RTL support:
-        rtl: lang === 'ar', // Set based on language
-        // effect: 'slide', // Default effect
-        grabCursor: true, // Add grab cursor effect
+        direction: 'horizontal',
+        rtl: lang === 'ar',
+        grabCursor: true,
     });
 }

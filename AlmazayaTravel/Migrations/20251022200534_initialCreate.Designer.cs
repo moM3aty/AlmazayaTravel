@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlmazayaTravel.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251022121812_initialCreate")]
+    [Migration("20251022200534_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />

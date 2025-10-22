@@ -10,7 +10,6 @@
 
 <div class="row">
     <div class="col-md-10 mx-auto">
-        <!-- Wider column -->
         <div class="card shadow-sm rounded-3">
             <div class="card-body p-4">
                 <form asp-action="PackageEdit" method="post" enctype="multipart/form-data">
@@ -21,7 +20,6 @@
                     <input type="hidden" asp-for="RowVersion" />
 
                     <div class="row g-3">
-                        <!-- English Fields -->
                         <div class="col-md-6 border-end pe-md-4">
                             <h5 class="mb-3 text-muted" data-key="EnglishSection" data-en="English Details" data-ar="التفاصيل الإنجليزية">English Details</h5>
                             <div class="mb-3">
@@ -41,7 +39,6 @@
                             </div>
                         </div>
 
-                        <!-- Arabic Fields -->
                         <div class="col-md-6 ps-md-4">
                             <h5 class="mb-3 text-muted" data-key="ArabicSection" data-en="Arabic Details" data-ar="التفاصيل العربية">Arabic Details</h5>
                             <div class="mb-3">
@@ -61,10 +58,8 @@
                             </div>
                         </div>
 
-                        <!-- Common Fields Separator -->
                         <div class="col-12"><hr class="my-3"></div>
 
-                        <!-- Common Fields Row -->
                         <div class="row g-3">
                             <div class="col-md-4">
                                 <label asp-for="DurationDays" class="form-label fw-bold"></label>
@@ -83,9 +78,7 @@
                             </div>
                         </div>
 
-
                         <div class="col-12 mt-3 mb-3">
-                            <!-- Current Image -->
                             <label class="form-label fw-bold" data-key="CurrentImageLabel" data-en="Current Image" data-ar="الصورة الحالية">Current Image</label>
                             <div>
                                 @if (!string.IsNullOrEmpty(Model.ImageUrl))
@@ -100,9 +93,7 @@
                         </div>
 
                         <div class="col-12 mt-3">
-                            <!-- New Image Upload -->
                             <label asp-for="ImageFile" class="form-label fw-bold"></label>
-                            <!-- Image Preview Placeholder -->
                             <img id="imagePreview" src="#" alt="New Image Preview" class="img-thumbnail admin-edit-img mb-2" style="display: none;" />
                             <input asp-for="ImageFile" type="file" class="form-control" accept="image/png, image/jpeg, image/gif" />
                             <span asp-validation-for="ImageFile" class="text-danger small"></span>
@@ -110,7 +101,6 @@
                         </div>
 
                         <div class="col-12 mt-3">
-                            <!-- IsActive Switch -->
                             <div class="form-check form-switch">
                                 <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch">
                                 <label asp-for="IsActive" class="form-check-label" data-key="IsActiveLabel" data-en="Make this package visible to customers?" data-ar="جعل هذه الباقة مرئية للعملاء؟"></label>
@@ -139,7 +129,4 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <!-- Translation handled globally by admin-dashboard.js -->
-    <!-- Image preview script is now in admin-dashboard.js -->
 }
-
