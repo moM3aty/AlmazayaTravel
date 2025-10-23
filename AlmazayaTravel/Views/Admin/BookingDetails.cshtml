@@ -129,8 +129,7 @@
                     </dd>
 
                     <dt class="col-sm-3" data-key="AmountPaid" data-en="Amount Paid" data-ar="المبلغ المدفوع">Amount Paid</dt>
-                    <dd class="col-sm-9 fw-bold">@(Model.AmountPaid?.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ar-SA")) ?? "-")</dd>
-
+                    <dd class="col-sm-9 fw-bold">@(Model.AmountPaid?.ToString("C") ?? "-")</dd>
 
                     <dt class="col-sm-3" data-key="TransactionId" data-en="Transaction ID" data-ar="معرف المعاملة">Transaction ID</dt>
                     <dd class="col-sm-9">@(Model.PaymentTransactionId ?? "-")</dd>

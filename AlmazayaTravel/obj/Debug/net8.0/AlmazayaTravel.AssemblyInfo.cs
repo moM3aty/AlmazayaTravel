@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AlmazayaTravel")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d5f8654e4b085ac35acc6be313e0bdea84e44dcf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d446fde36d884d69e058e4b5c40c81ba0c8fabc1")]
 [assembly: System.Reflection.AssemblyProductAttribute("AlmazayaTravel")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AlmazayaTravel")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

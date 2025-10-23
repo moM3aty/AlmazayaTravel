@@ -29,6 +29,12 @@ namespace AlmazayaTravel.Data
                 .Property(b => b.AmountPaid)
                 .HasPrecision(18, 2);
 
+            // *** ADDED: Configure precision for the new TotalAmountDue property ***
+            modelBuilder.Entity<Booking>()
+                .Property(b => b.TotalAmountDue)
+                .HasPrecision(18, 2);
+            // *** END ADDED ***
+
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.TripPackage)
                 .WithMany(tp => tp.Bookings)
@@ -37,3 +43,4 @@ namespace AlmazayaTravel.Data
         }
     }
 }
+

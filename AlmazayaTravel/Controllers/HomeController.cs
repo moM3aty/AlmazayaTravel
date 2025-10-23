@@ -22,9 +22,9 @@ namespace AlmazayaTravel.Controllers
         {
             _logger.LogInformation("Fetching active packages for Index page.");
             var activePackages = await _context.TripPackages
-                                               .Where(p => p.IsActive)
-                                               .OrderBy(p => p.DestinationCountry)
-                                               .ToListAsync();
+                                            .Where(p => p.IsActive)
+                                            .OrderBy(p => p.DestinationCountry)
+                                            .ToListAsync();
             return View(activePackages);
         }
 
@@ -81,6 +81,7 @@ namespace AlmazayaTravel.Controllers
             ModelState.Remove("BookingDate");
             ModelState.Remove("RowVersion");
             ModelState.Remove("Id");
+            ModelState.Remove("TotalAmountDue"); // Also remove the new field from initial validation
 
             var tripPackage = await _context.TripPackages.AsNoTracking().FirstOrDefaultAsync(tp => tp.Id == booking.TripPackageId);
 
@@ -92,20 +93,24 @@ namespace AlmazayaTravel.Controllers
                 return View(booking);
             }
 
+            // *** ADDED: Calculate and set TotalAmountDue before saving ***
+            decimal pricePerUnit = tripPackage.PriceAfterDiscount ?? tripPackage.PriceBeforeDiscount;
+            decimal totalAmount = pricePerUnit * booking.Adults; // Adjust if children have different pricing
+            booking.TotalAmountDue = totalAmount;
+            // *** END ADDED ***
+
             if (ModelState.IsValid)
             {
                 booking.BookingDate = DateTime.UtcNow;
                 booking.PaymentStatus = "Pending";
-
-                decimal pricePerUnit = tripPackage.PriceAfterDiscount ?? tripPackage.PriceBeforeDiscount;
-                decimal totalAmount = pricePerUnit * booking.Adults;
                 booking.AmountPaid = null;
 
                 _context.Add(booking);
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Booking ID {BookingId} created for Package ID {PackageId}. Redirecting to payment.", booking.Id, booking.TripPackageId);
-                return RedirectToAction("Initiate", "Payment", new { bookingId = booking.Id, amount = totalAmount });
+                // Pass the calculated totalAmount to the Initiate action
+                return RedirectToAction("Initiate", "Payment", new { bookingId = booking.Id, amount = booking.TotalAmountDue });
             }
             else
             {
@@ -130,8 +135,8 @@ namespace AlmazayaTravel.Controllers
             }
             int bookingId = (int)TempData["BookingId"];
             var booking = await _context.Bookings
-                                      .Include(b => b.TripPackage)
-                                      .FirstOrDefaultAsync(b => b.Id == bookingId);
+                                       .Include(b => b.TripPackage)
+                                       .FirstOrDefaultAsync(b => b.Id == bookingId);
             if (booking == null)
             {
                 _logger.LogWarning("BookingConfirmation requested for non-existent Booking ID: {BookingId}", bookingId);
@@ -170,3 +175,4 @@ namespace AlmazayaTravel.Controllers
         }
     }
 }
+

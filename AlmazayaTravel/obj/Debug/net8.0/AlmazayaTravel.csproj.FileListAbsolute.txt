@@ -148,3 +148,4 @@ C:\Users\MOHAMED ABO-ELM3ATY\Downloads\AlmazayaTravel\AlmazayaTravel\obj\Debug\n
 C:\Users\MOHAMED ABO-ELM3ATY\Downloads\AlmazayaTravel\AlmazayaTravel\obj\Debug\net8.0\AlmazayaTravel.pdb
 C:\Users\MOHAMED ABO-ELM3ATY\Downloads\AlmazayaTravel\AlmazayaTravel\obj\Debug\net8.0\AlmazayaTravel.genruntimeconfig.cache
 C:\Users\MOHAMED ABO-ELM3ATY\Downloads\AlmazayaTravel\AlmazayaTravel\obj\Debug\net8.0\ref\AlmazayaTravel.dll
+C:\Users\MOHAMED ABO-ELM3ATY\Downloads\AlmazayaTravel\AlmazayaTravel\bin\Debug\net8.0\BouncyCastle.Crypto.dll

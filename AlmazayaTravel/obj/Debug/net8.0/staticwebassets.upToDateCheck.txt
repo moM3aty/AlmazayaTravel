@@ -61,6 +61,7 @@ wwwroot\images\mala\img6.jpg
 wwwroot\images\mala\img7.jpg
 wwwroot\images\mala\img8.jpg
 wwwroot\images\mala\img9.jpeg
+wwwroot\images\packages\5e932b8c-4b85-4dfd-be90-21fd6a7222af_done.png
 wwwroot\images\plane.svg
 wwwroot\images\shape-1-bg.png
 wwwroot\images\shape-2-bg.png

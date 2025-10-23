@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AlmazayaTravel.Models
@@ -8,6 +9,7 @@ namespace AlmazayaTravel.Models
         [Key]
         public int Id { get; set; }
 
+        // --- Customer Information ---
         [Required(ErrorMessage = "Client name is required.")]
         [StringLength(100)]
         [Display(Name = "Client Name")]
@@ -34,6 +36,7 @@ namespace AlmazayaTravel.Models
         [Display(Name = "Number of Children")]
         public int Children { get; set; } = 0;
 
+        // --- Trip Package Link ---
         [Required]
         [Display(Name = "Trip Package")]
         public int TripPackageId { get; set; }
@@ -42,6 +45,7 @@ namespace AlmazayaTravel.Models
         [Display(Name = "Trip Package")]
         public virtual TripPackage? TripPackage { get; set; }
 
+        // --- Booking Status & Metadata ---
         [Required]
         [Display(Name = "Booking Date")]
         [DataType(DataType.DateTime)]
@@ -61,7 +65,15 @@ namespace AlmazayaTravel.Models
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
         public decimal? AmountPaid { get; set; }
 
+        // *** ADDED: Store the calculated total amount ***
+        [Required]
+        [Column(TypeName = "decimal(18, 2)")]
+        [Display(Name = "Total Amount Due")]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
+        public decimal TotalAmountDue { get; set; }
+
         [Timestamp]
         public byte[]? RowVersion { get; set; }
     }
 }
+
